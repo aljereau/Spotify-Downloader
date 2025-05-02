@@ -1,0 +1,147 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# UI Documentation Flow & Relationships
+
+## Document Structure Diagram
+
+```
+┌───────────────────────┐
+│                       │
+│  PROJECT_ROADMAP.mdc  │◄────────────────────┐
+│  (Master Reference)   │                     │
+│                       │                     │
+└───────────┬───────────┘                     │
+            │                                 │
+            ▼                                 │
+┌───────────────────────┐                     │
+│  DEVELOPMENT_RULES.mdc│                     │
+│  (Process Standards)  │                     │
+│                       │                     │
+└───────────┬───────────┘                     │
+            │                                 │
+            │                                 │
+            ▼                                 │
+┌─────────────────────────────────────────────┴───┐
+│                                                 │
+│               Phase Documentation               │
+│                                                 │
+│  ┌───────────────────┐     ┌───────────────────┐│
+│  │PHASE_1_FOUNDATION │     │PHASE_1_PROGRESS   ││
+│  │(Requirements)     │◄───►│(Status Tracking)  ││
+│  └───────────────────┘     └───────────────────┘│
+│                                                 │
+│  ┌───────────────────┐     ┌───────────────────┐│
+│  │PHASE_2_CORE_UI    │     │PHASE_2_PROGRESS   ││
+│  │(Requirements)     │◄───►│(Status Tracking)  ││
+│  └───────────────────┘     └───────────────────┘│
+│                                                 │
+│  ┌───────────────────┐     ┌───────────────────┐│
+│  │PHASE_3_PROCESS    │     │PHASE_3_PROGRESS   ││
+│  │(Requirements)     │◄───►│(Status Tracking)  ││
+│  └───────────────────┘     └───────────────────┘│
+│                                                 │
+│  ┌───────────────────┐     ┌───────────────────┐│
+│  │PHASE_4_RESULTS    │     │PHASE_4_PROGRESS   ││
+│  │(Requirements)     │◄───►│(Status Tracking)  ││
+│  └───────────────────┘     └───────────────────┘│
+│                                                 │
+│  ┌───────────────────┐     ┌───────────────────┐│
+│  │PHASE_5_ADVANCED   │     │PHASE_5_PROGRESS   ││
+│  │(Requirements)     │◄───►│(Status Tracking)  ││
+│  └───────────────────┘     └───────────────────┘│
+│                                                 │
+│  ┌───────────────────┐     ┌───────────────────┐│
+│  │PHASE_6_PACKAGING  │     │PHASE_6_PROGRESS   ││
+│  │(Requirements)     │◄───►│(Status Tracking)  ││
+│  └───────────────────┘     └───────────────────┘│
+│                                                 │
+└─────────────────────────────────────────────────┘
+                      │
+                      │
+                      ▼
+              ┌───────────────┐
+              │ README.md     │
+              │ (Public Docs) │
+              └───────────────┘
+```
+
+## Document Usage Flow
+
+```
+┌────────────────────────────────────────────────────────────┐
+│                                                            │
+│ 1. START → PROJECT_ROADMAP.mdc                             │
+│    (Understand the overall plan)                           │
+│                                                            │
+│ 2. CONSULT → DEVELOPMENT_RULES.mdc                         │
+│    (Understand the development standards)                  │
+│                                                            │
+│ 3. REVIEW → PHASE_X_FOUNDATION.mdc                         │
+│    (Understand specific phase requirements)                │
+│                                                            │
+│ 4. VALIDATE → Previous phase's PHASE_X_PROGRESS.mdc        │
+│    (Verify previous phase is complete)                     │
+│                                                            │
+│ 5. CREATE/UPDATE → Current phase's PHASE_X_PROGRESS.mdc    │
+│    (Track progress through implementation)                 │
+│                                                            │
+│ 6. COMPLETE → All validation criteria                      │
+│    (Verify quality and functionality)                      │
+│                                                            │
+│ 7. UPDATE → README.md                                      │
+│    (Document completed functionality)                      │
+│                                                            │
+│ 8. REPEAT → For next phase                                 │
+│                                                            │
+└────────────────────────────────────────────────────────────┘
+```
+
+## Document Update Patterns
+
+### Standard Update Flow
+
+```
+                       ┌─── Daily Updates ───┐
+                       │                     │
+                       ▼                     │
+Phase Definition → Progress Tracking → Code Implementation
+  (Static)        (Dynamic Document)    (Code Repository)
+                       │                     ▲
+                       │                     │
+                       └─── Validation ──────┘
+```
+
+### Phase Completion Flow
+
+```
+Progress Document ──┐
+                    │
+Phase Definition ───┼──► Validate ──► Update README ──► Create Next Phase Progress
+                    │
+DEVELOPMENT_RULES ──┘
+```
+
+## MDC Link Relationships
+
+- **PROJECT_ROADMAP.mdc**
+  - Links to all Phase Definition documents
+  - Links to DEVELOPMENT_RULES.mdc
+  - Links to PROGRESS_TEMPLATE.mdc
+  - Links to all Phase Progress documents
+
+- **Phase Definition documents**
+  - Link to next Phase Definition document
+
+- **Phase Progress documents**
+  - Link to corresponding Phase Definition document
+  - Link to DEVELOPMENT_RULES.mdc
+
+- **DEVELOPMENT_RULES.mdc**
+  - Links to PROJECT_ROADMAP.mdc
+  - Links to sample Phase Definition and Progress documents
+
+This document flow ensures that all aspects of the UI development process are properly documented, tracked, and validated according to consistent standards.
+

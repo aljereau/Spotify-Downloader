@@ -17,6 +17,10 @@ The Spotify Playlist Extractor is a powerful command-line tool that extracts and
 4. **Separation of Concerns**: Maintain clear separation between UI and core business logic.
 5. **Documentation**: Document each phase thoroughly to ensure continuity and maintainability.
 
+## Documentation Structure
+
+All UI development follows a structured documentation system outlined in [Documentation Flow & Relationships](mdc:UI/DOCUMENTATION_FLOW.mdc). This document provides visual diagrams showing how the various documents relate to each other and how they should be used during the development process.
+
 ## Development Rules
 
 All UI development must adhere to the [Development Rules & Workflow Standards](mdc:UI/DEVELOPMENT_RULES.mdc). These rules define:
@@ -107,4 +111,5 @@ The UI will be developed as a wrapper around the existing backend, using a servi
 - Qt Designer for UI layout
 - Backend dependencies remain unchanged
 - Packaging tools (PyInstaller, etc.)
+
 
