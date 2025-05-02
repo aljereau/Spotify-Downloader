@@ -1,5 +1,110 @@
 ---
-description:
-globs:
+description: 
+globs: 
 alwaysApply: false
 ---
+# Spotify Playlist Extractor UI Development Roadmap
+
+## Project Overview
+
+The Spotify Playlist Extractor is a powerful command-line tool that extracts and analyzes track information from Spotify playlists, with a focus on discovering "hidden gems." This roadmap outlines the sequential phases required to develop a user-friendly PyQt-based GUI without compromising the core functionality of the existing backend.
+
+## Core Principles
+
+1. **Backend Integrity**: Preserve all existing functionality and ensure it remains operational throughout UI development.
+2. **Sequential Development**: Follow a phase-based approach, building each component systematically.
+3. **User-Centric Design**: Focus on musicians and non-technical users who need a simple, intuitive interface.
+4. **Separation of Concerns**: Maintain clear separation between UI and core business logic.
+5. **Documentation**: Document each phase thoroughly to ensure continuity and maintainability.
+
+## Development Rules
+
+All UI development must adhere to the [Development Rules & Workflow Standards](mdc:UI/DEVELOPMENT_RULES.mdc). These rules define:
+
+- Required validation steps between phases
+- Component completion criteria
+- Progress tracking requirements
+- Documentation update protocols
+- Code quality standards
+- Validation criteria and evidence
+
+## Progress Tracking
+
+Each phase has its own progress tracking document that must be maintained throughout development:
+
+- [Phase 1 Progress](mdc:UI/PHASE_1_PROGRESS.mdc)
+- Phase 2 Progress (to be created when Phase 1 is complete)
+- Phase 3 Progress (to be created when Phase 2 is complete)
+- Phase 4 Progress (to be created when Phase 3 is complete)
+- Phase 5 Progress (to be created when Phase 4 is complete)
+- Phase 6 Progress (to be created when Phase 5 is complete)
+
+Progress tracking follows the [Progress Tracking Template](mdc:UI/PROGRESS_TEMPLATE.mdc) and includes detailed task status, validation evidence, issue tracking, and retrospective notes.
+
+## Development Phases
+
+### [Phase 1: Foundation](mdc:UI/PHASE_1_FOUNDATION.mdc)
+- Set up PyQt development environment
+- Create app skeleton and module structure
+- Abstract backend functionality for UI integration
+- Implement logging and error handling for UI
+
+### [Phase 2: Core UI Components](mdc:UI/PHASE_2_CORE_UI.mdc)
+- Design and implement the main application window
+- Create playlist input and validation UI
+- Develop settings and configuration panel
+- Build authentication handling interface
+
+### [Phase 3: Process Visualization](mdc:UI/PHASE_3_PROCESS_VISUALIZATION.mdc)
+- Implement progress indicators and status updates
+- Create task queue visualization
+- Develop cancellation and pause functionality
+- Add real-time log viewing
+
+### [Phase 4: Results Display](mdc:UI/PHASE_4_RESULTS_DISPLAY.mdc)
+- Design playlist results view
+- Implement hidden gems visualization
+- Create interactive track listing
+- Develop results filtering and sorting
+
+### [Phase 5: Advanced Features](mdc:UI/PHASE_5_ADVANCED_FEATURES.mdc)
+- Add playlist creation interface
+- Implement multi-playlist management
+- Create visualization for analytics
+- Develop export functionality for reports
+
+### [Phase 6: Packaging & Distribution](mdc:UI/PHASE_6_PACKAGING.mdc)
+- Create installation script
+- Develop standalone executable packaging
+- Implement auto-update functionality
+- Create comprehensive user documentation
+
+## Technical Architecture
+
+- **UI Layer**: PyQt5-based user interface components
+- **Controller Layer**: Handles communication between UI and backend
+- **Service Layer**: Wraps existing functionality for UI consumption
+- **Core Backend**: Original playlist extraction and analysis functionality
+
+## Integration Strategy
+
+The UI will be developed as a wrapper around the existing backend, using a service layer to communicate between the UI components and the core functionality. This approach ensures:
+
+1. The CLI functionality remains intact and operational
+2. UI code doesn't directly modify backend logic
+3. Changes in one layer don't necessarily affect the other
+
+## Testing Strategy
+
+- Unit tests for UI components
+- Integration tests for UI-backend interaction
+- End-to-end testing for complete workflows
+- User acceptance testing with musicians (target audience)
+
+## Dependencies
+
+- PyQt5 for UI components
+- Qt Designer for UI layout
+- Backend dependencies remain unchanged
+- Packaging tools (PyInstaller, etc.)
+
