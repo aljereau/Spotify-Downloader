@@ -3,11 +3,11 @@ Processing view for displaying playlist processing progress.
 """
 
 import logging
-from PyQt6.QtWidgets import (
+from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
     QProgressBar, QGroupBox, QTextEdit, QSplitter
 )
-from PyQt6.QtCore import Qt, pyqtSlot, QSize
+from PySide6.QtCore import Qt, Slot, QSize
 
 from spotify_downloader_ui.services.config_service import ConfigService
 from spotify_downloader_ui.services.error_service import ErrorService
@@ -63,7 +63,7 @@ class ProcessingView(QWidget):
         self.playlist_service.playlist_processed.connect(self._on_processing_completed)
         self.playlist_service.processing_error.connect(self._on_processing_error)
     
-    @pyqtSlot()
+    @Slot()
     def _on_cancel_clicked(self):
         """Handle cancel button click."""
         self.playlist_service.cancel_processing()
@@ -73,19 +73,19 @@ class ProcessingView(QWidget):
         self.process_vis.set_status("Processing cancelled")
         self.process_vis.set_processing_complete(success=False, error_message="Cancelled by user")
     
-    @pyqtSlot()
+    @Slot()
     def _on_pause_requested(self):
         """Handle pause request."""
         # In this version we don't actually pause the backend processing
         # as it's not supported by the backend, but we update the UI to show paused state
         self.process_vis.add_detail("Processing paused (UI only, backend continues)")
     
-    @pyqtSlot()
+    @Slot()
     def _on_resume_requested(self):
         """Handle resume request."""
         self.process_vis.add_detail("Processing resumed")
     
-    @pyqtSlot(int, int)
+    @Slot(int, int)
     def _on_processing_progress(self, current: int, total: int):
         """Handle processing progress update.
         
@@ -152,7 +152,7 @@ class ProcessingView(QWidget):
         if current % 10 == 0 or current == 1:
             self.process_vis.add_detail(f"Processed {current} of {total} tracks")
     
-    @pyqtSlot(str, dict, list, str)
+    @Slot(str, dict, list, str)
     def _on_processing_completed(self, playlist_id: str, metadata: dict, tracks: list, output_dir: str):
         """Handle processing completion.
         
@@ -201,7 +201,7 @@ class ProcessingView(QWidget):
         for detail in details:
             self.process_vis.add_detail(detail)
     
-    @pyqtSlot(Exception)
+    @Slot(Exception)
     def _on_processing_error(self, error: Exception):
         """Handle processing error.
         

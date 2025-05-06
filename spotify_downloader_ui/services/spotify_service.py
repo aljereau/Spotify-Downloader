@@ -6,7 +6,7 @@ import os
 import logging
 import sys
 from typing import Dict, List, Optional, Any
-from PyQt6.QtCore import QObject, pyqtSignal
+from PySide6.QtCore import QObject, Signal
 
 # Import the backend functionality
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
@@ -30,8 +30,8 @@ class SpotifyService(QObject):
     """Service for interacting with the Spotify API."""
     
     # Signals
-    connection_status_changed = pyqtSignal(bool, str)  # connected, message
-    error_occurred = pyqtSignal(Exception)
+    connection_status_changed = Signal(bool, str)  # connected, message
+    error_occurred = Signal(Exception)
     
     def __init__(self):
         """Initialize the Spotify service."""

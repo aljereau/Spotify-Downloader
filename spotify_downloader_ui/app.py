@@ -4,8 +4,8 @@ Main application class for the Spotify Downloader UI.
 
 import sys
 import logging
-from PyQt6.QtWidgets import QApplication
-from PyQt6.QtCore import QSettings, Qt
+from PySide6.QtWidgets import QApplication
+from PySide6.QtCore import QSettings, Qt
 
 from spotify_downloader_ui.views.main_window import MainWindow
 from spotify_downloader_ui.services.config_service import ConfigService
@@ -26,9 +26,9 @@ class SpotifyDownloaderApp:
         # Create Qt application
         self.app = QApplication(sys.argv)
         
-        # Set high DPI attributes (must be done before any widgets are created)
-        self.app.setAttribute(Qt.ApplicationAttribute.AA_EnableHighDpiScaling, True)
-        self.app.setAttribute(Qt.ApplicationAttribute.AA_UseHighDpiPixmaps, True)
+        # Note: High DPI scaling is enabled by default in Qt 6
+        # The previously used attributes AA_EnableHighDpiScaling and AA_UseHighDpiPixmaps
+        # are deprecated and have been removed in newer versions of PyQt6
         
         # Initialize services
         self.config_service = ConfigService()
@@ -61,7 +61,7 @@ class SpotifyDownloaderApp:
         """Run the application."""
         logger.info("Starting application")
         self.main_window.show()
-        return self.app.exec()
+        return self.app.exec_()
 
 
 def run_app():

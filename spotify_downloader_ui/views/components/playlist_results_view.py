@@ -6,14 +6,14 @@ import logging
 from typing import List, Dict, Optional, Any
 from functools import partial
 
-from PyQt6.QtWidgets import (
+from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, 
     QScrollArea, QFrame, QTabWidget, QToolBar, QToolButton,
-    QSplitter, QMenu, QAction, QFileDialog, QDialog,
+    QSplitter, QMenu, QFileDialog, QDialog,
     QGroupBox, QGridLayout, QSizePolicy
 )
-from PyQt6.QtCore import Qt, pyqtSignal, pyqtSlot, QSize
-from PyQt6.QtGui import QIcon, QPixmap, QImage
+from PySide6.QtCore import Qt, Signal, Slot, QSize
+from PySide6.QtGui import QIcon, QPixmap, QImage, QAction, QAction, QAction
 
 from spotify_downloader_ui.services.config_service import ConfigService
 from spotify_downloader_ui.services.error_service import ErrorService
@@ -202,7 +202,7 @@ class PlaylistMetadataView(QWidget):
 class PlaylistResultsContainer(QTabWidget):
     """Container widget for multiple playlist results."""
     
-    playlist_selected = pyqtSignal(str)  # Emits playlist ID when selected
+    playlist_selected = Signal(str)  # Emits playlist ID when selected
     
     def __init__(self, config_service: ConfigService, error_service: ErrorService):
         """Initialize the playlist results container.
@@ -287,7 +287,7 @@ class PlaylistResultsContainer(QTabWidget):
             return current_widget.save_snapshot()
         return False
     
-    @pyqtSlot(int)
+    @Slot(int)
     def _on_tab_close_requested(self, index: int):
         """Handle tab close button click.
         
@@ -317,7 +317,7 @@ class PlaylistResultsContainer(QTabWidget):
             if isinstance(current_widget, PlaylistResultsView):
                 self.playlist_selected.emit(current_widget.playlist_id)
     
-    @pyqtSlot(int)
+    @Slot(int)
     def _on_tab_changed(self, index: int):
         """Handle tab change.
         
@@ -450,7 +450,7 @@ class PlaylistResultsView(QWidget):
         logger.info(f"Saving snapshot of playlist: {self.playlist_data.get('name', 'Unnamed')}")
         return True
     
-    @pyqtSlot()
+    @Slot()
     def _on_snapshot(self):
         """Handle snapshot button click."""
         success = self.save_snapshot()
@@ -465,7 +465,7 @@ class PlaylistResultsView(QWidget):
                 message="Failed to save playlist snapshot."
             )
     
-    @pyqtSlot()
+    @Slot()
     def _on_share(self):
         """Handle share button click."""
         # In a real implementation, this would show share options
@@ -474,7 +474,7 @@ class PlaylistResultsView(QWidget):
             message="Sharing functionality will be implemented in a future update."
         )
     
-    @pyqtSlot()
+    @Slot()
     def _on_compare(self):
         """Handle compare button click."""
         # In a real implementation, this would show comparison options
@@ -483,7 +483,7 @@ class PlaylistResultsView(QWidget):
             message="Playlist comparison will be implemented in a future update."
         )
     
-    @pyqtSlot()
+    @Slot()
     def _on_refresh(self):
         """Handle refresh button click."""
         # In a real implementation, this would reload the playlist data

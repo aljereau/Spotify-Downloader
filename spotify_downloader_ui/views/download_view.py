@@ -5,13 +5,13 @@ Download view for downloading tracks from processed playlists.
 import os
 import logging
 from typing import Dict, List, Optional
-from PyQt6.QtWidgets import (
+from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, 
     QProgressBar, QTableWidget, QTableWidgetItem, QComboBox,
     QSpinBox, QCheckBox, QGroupBox, QFormLayout, QAbstractItemView,
     QHeaderView, QMessageBox, QFileDialog
 )
-from PyQt6.QtCore import Qt, pyqtSignal, pyqtSlot, QThread, QObject
+from PySide6.QtCore import Qt, Signal, Slot, QThread, QObject
 
 # Import the downloader functionality
 import sys
@@ -33,11 +33,11 @@ class DownloadWorker(QObject):
     """Worker class for downloading tracks in a separate thread."""
     
     # Signals
-    started = pyqtSignal()
-    progress = pyqtSignal(int, int)  # current, total
-    track_completed = pyqtSignal(Dict)  # track result
-    finished = pyqtSignal(list)  # download results
-    error = pyqtSignal(str)  # error message
+    started = Signal()
+    progress = Signal(int, int)  # current, total
+    track_completed = Signal(object)  # track result
+    finished = Signal(list)  # download results
+    error = Signal(str)  # error message
     
     def __init__(self, playlist_id: str, metadata: Dict, tracks: List[Dict], 
                  output_dir: str, format_str: str = "mp3", max_workers: int = 4,
@@ -63,7 +63,7 @@ class DownloadWorker(QObject):
         self.skip_existing = skip_existing
         self.results = []
     
-    @pyqtSlot()
+    @Slot()
     def process(self):
         """Download the tracks."""
         try:
@@ -132,8 +132,8 @@ class DownloadView(QWidget):
     """View for downloading tracks from processed playlists."""
     
     # Signals
-    download_started = pyqtSignal()
-    download_completed = pyqtSignal(list)  # download results
+    download_started = Signal()
+    download_completed = Signal(list)  # download results
     
     def __init__(self, playlist_service: PlaylistService, 
                  config_service: ConfigService, 
@@ -265,7 +265,7 @@ class DownloadView(QWidget):
         except Exception as e:
             logger.error(f"Error checking dependencies: {str(e)}")
     
-    def setup_playlist(self, playlist_id: str, metadata: Dict, tracks: List[Dict], output_dir: str):
+    def setup_playlist(self, playlist_id: str, metadata: object, tracks: list, output_dir: str):
         """Set up the view with playlist information.
         
         Args:
@@ -325,7 +325,7 @@ class DownloadView(QWidget):
             details_item.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable)
             self.results_table.setItem(i, 3, details_item)
     
-    def _update_track_status(self, track_result: Dict):
+    def _update_track_status(self, track_result: object):
         """Update the status of a track in the table.
         
         Args:
@@ -361,7 +361,7 @@ class DownloadView(QWidget):
                 self.results_table.scrollToItem(name_item)
                 break
     
-    @pyqtSlot()
+    @Slot()
     def _on_browse_clicked(self):
         """Handle browse button click for output directory selection."""
         directory = QFileDialog.getExistingDirectory(
@@ -374,7 +374,7 @@ class DownloadView(QWidget):
             self.current_output_dir = directory
             self.output_label.setText(f"Output directory: {directory}")
     
-    @pyqtSlot()
+    @Slot()
     def _on_download_clicked(self):
         """Handle download button click."""
         if not self.current_tracks:
@@ -425,7 +425,7 @@ class DownloadView(QWidget):
         # Start thread
         self.download_thread.start()
     
-    @pyqtSlot()
+    @Slot()
     def _on_cancel_clicked(self):
         """Handle cancel button click."""
         if self.download_thread and self.download_thread.isRunning():
@@ -440,7 +440,7 @@ class DownloadView(QWidget):
             self.status_label.setText("Download cancelled")
             self._reset_ui_state()
     
-    @pyqtSlot()
+    @Slot()
     def _on_open_folder_clicked(self):
         """Handle open folder button click."""
         if self.current_output_dir and os.path.exists(self.current_output_dir):
@@ -454,17 +454,17 @@ class DownloadView(QWidget):
             target_dir = downloads_dir if os.path.exists(downloads_dir) else playlist_dir
             
             # Open folder in file explorer
-            from PyQt6.QtGui import QDesktopServices
-            from PyQt6.QtCore import QUrl
+            from PySide6.QtGui import QDesktopServices
+            from PySide6.QtCore import QUrl
             QDesktopServices.openUrl(QUrl.fromLocalFile(target_dir))
     
-    @pyqtSlot()
+    @Slot()
     def _on_download_started(self):
         """Handle download started signal."""
         self.status_label.setText("Download started...")
         self.download_started.emit()
     
-    @pyqtSlot(int, int)
+    @Slot(int, int)
     def _on_download_progress(self, current: int, total: int):
         """Handle download progress signal.
         
@@ -475,8 +475,8 @@ class DownloadView(QWidget):
         self.progress_bar.setValue(current)
         self.status_label.setText(f"Downloading... {current}/{total} tracks completed")
     
-    @pyqtSlot(dict)
-    def _on_track_completed(self, result: Dict):
+    @Slot(dict)
+    def _on_track_completed(self, result: object):
         """Handle track completed signal.
         
         Args:
@@ -490,8 +490,8 @@ class DownloadView(QWidget):
         status = "Successfully downloaded" if result.get('success', False) else "Failed to download"
         self.current_track_label.setText(f"{status}: {track_name}")
     
-    @pyqtSlot(list)
-    def _on_download_finished(self, results: List[Dict]):
+    @Slot(list)
+    def _on_download_finished(self, results: list):
         """Handle download finished signal.
         
         Args:
@@ -514,7 +514,7 @@ class DownloadView(QWidget):
         # Emit completion signal
         self.download_completed.emit(results)
     
-    @pyqtSlot(str)
+    @Slot(str)
     def _on_download_error(self, error_message: str):
         """Handle download error signal.
         

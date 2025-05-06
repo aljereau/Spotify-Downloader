@@ -6,20 +6,20 @@ import logging
 from typing import List, Dict, Optional, Any, Callable
 from enum import Enum
 
-from PyQt6.QtWidgets import (
+from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, 
     QTableView, QAbstractItemView, QHeaderView, QMenu,
-    QDialog, QFrame, QSplitter, QToolBar, QAction,
+    QDialog, QFrame, QSplitter, QToolBar,
     QCheckBox, QComboBox, QSizePolicy, QStyledItemDelegate,
     QStyle, QApplication
 )
-from PyQt6.QtCore import (
-    Qt, pyqtSignal, pyqtSlot, QSize, QAbstractTableModel, 
-    QModelIndex, QVariant, QSortFilterProxyModel, QRect
+from PySide6.QtCore import (
+    Qt, Signal, Slot, QSize, QAbstractTableModel, 
+    QModelIndex, QSortFilterProxyModel, QRect
 )
-from PyQt6.QtGui import (
+from PySide6.QtGui import (
     QIcon, QPixmap, QImage, QPainter, QColor, QPen, 
-    QBrush, QFont, QFontMetrics, QPalette
+    QBrush, QFont, QFontMetrics, QPalette, QAction
 )
 
 from spotify_downloader_ui.services.config_service import ConfigService
@@ -73,7 +73,7 @@ class TrackTableModel(QAbstractTableModel):
         """
         return len(self.COLUMNS)
     
-    def data(self, index: QModelIndex, role: int = Qt.ItemDataRole.DisplayRole) -> QVariant:
+    def data(self, index: QModelIndex, role: int = Qt.ItemDataRole.DisplayRole):
         """Get data for a specific index and role.
         
         Args:
@@ -84,7 +84,7 @@ class TrackTableModel(QAbstractTableModel):
             Data value
         """
         if not index.isValid() or index.row() >= len(self.tracks):
-            return QVariant()
+            return None
         
         track = self.tracks[index.row()]
         column = self.COLUMNS[index.column()]
@@ -138,9 +138,9 @@ class TrackTableModel(QAbstractTableModel):
             else:
                 return QApplication.palette().alternateBase()
                 
-        return QVariant()
+        return None
     
-    def headerData(self, section: int, orientation: Qt.Orientation, role: int = Qt.ItemDataRole.DisplayRole) -> QVariant:
+    def headerData(self, section: int, orientation: Qt.Orientation, role: int = Qt.ItemDataRole.DisplayRole):
         """Get header data.
         
         Args:
@@ -156,7 +156,7 @@ class TrackTableModel(QAbstractTableModel):
         elif orientation == Qt.Orientation.Vertical and role == Qt.ItemDataRole.DisplayRole:
             return section + 1
             
-        return QVariant()
+        return None
     
     def setTracks(self, tracks: List[Dict[str, Any]]):
         """Set the track data.
@@ -179,7 +179,7 @@ class TrackScoreDelegate(QStyledItemDelegate):
         """
         super().__init__(parent)
     
-    def paint(self, painter: QPainter, option: QStyle.State, index: QModelIndex):
+    def paint(self, painter: QPainter, option: QStyle.StateFlag, index: QModelIndex):
         """Paint the delegate.
         
         Args:
@@ -207,8 +207,8 @@ class TrackScoreDelegate(QStyledItemDelegate):
             bar_width = int((option.rect.width() - 4) * score / 100)
             bar_height = option.rect.height() - 8
             bar_rect = QRect(
-                option.rect.x() + 2,
-                option.rect.y() + 4,
+                option.rect.position().position().x() + 2,
+                option.rect.position().position().y() + 4,
                 bar_width,
                 bar_height
             )
@@ -239,7 +239,7 @@ class TrackScoreDelegate(QStyledItemDelegate):
 class TrackDetailPanel(QWidget):
     """Panel for displaying detailed information about a selected track."""
     
-    play_preview = pyqtSignal(str)  # Emits preview URL when play button clicked
+    play_preview = Signal(str)  # Emits preview URL when play button clicked
     
     def __init__(self, parent=None):
         """Initialize the track detail panel.
@@ -429,7 +429,7 @@ class TrackDetailPanel(QWidget):
         # Clear album art
         self.cover_label.clear()
     
-    @pyqtSlot()
+    @Slot()
     def _on_preview_clicked(self):
         """Handle preview button click."""
         if self.current_track and "preview_url" in self.current_track:
@@ -583,7 +583,7 @@ class TrackListing:
         
         return selected_tracks
     
-    @pyqtSlot(QModelIndex)
+    @Slot(QModelIndex)
     def _on_track_selected(self, index: QModelIndex):
         """Handle track selection.
         
@@ -597,7 +597,7 @@ class TrackListing:
             track = self.track_model.tracks[row]
             self.detail_panel.set_track(track)
     
-    @pyqtSlot(QModelIndex)
+    @Slot(QModelIndex)
     def _on_context_menu(self, position):
         """Show context menu for track.
         
@@ -631,17 +631,17 @@ class TrackListing:
             # In a real implementation, this would export the selected tracks
             logger.info(f"Export requested for {len(selected)} tracks")
     
-    @pyqtSlot()
+    @Slot()
     def _on_select_all(self):
         """Select all tracks."""
         self.track_table.selectAll()
     
-    @pyqtSlot()
+    @Slot()
     def _on_select_none(self):
         """Deselect all tracks."""
         self.track_table.clearSelection()
     
-    @pyqtSlot(int)
+    @Slot(int)
     def _on_group_changed(self, index: int):
         """Handle grouping option change.
         
@@ -653,7 +653,7 @@ class TrackListing:
         # In a real implementation, this would update the view to group tracks
         logger.info(f"Group by changed to: {group_by}")
     
-    @pyqtSlot(str)
+    @Slot(str)
     def _on_play_preview(self, preview_url: str):
         """Handle preview playback request.
         

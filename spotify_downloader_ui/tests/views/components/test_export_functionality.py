@@ -5,8 +5,8 @@ Tests for the ExportFunctionality component.
 import sys
 import logging
 import unittest
-from PyQt6.QtWidgets import QApplication
-from PyQt6.QtCore import Qt
+from PySide6.QtWidgets import QApplication
+from PySide6.QtCore import Qt
 
 # Import mock component
 from spotify_downloader_ui.tests.test_components import ExportFunctionality
@@ -151,7 +151,7 @@ def run_interactive_test():
     export.set_export_data(SAMPLE_EXPORT_DATA)
     
     # Run the application event loop
-    return runner.exec()
+    return runner.exec_()
 
 if __name__ == "__main__":
     # Run unit tests if run with pytest

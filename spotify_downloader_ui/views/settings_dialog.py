@@ -4,12 +4,12 @@ Settings dialog for configuring application settings.
 
 import os
 import logging
-from PyQt6.QtWidgets import (
+from PySide6.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton,
     QGroupBox, QCheckBox, QFileDialog, QTabWidget, QWidget, QFormLayout,
     QComboBox, QDialogButtonBox, QMessageBox
 )
-from PyQt6.QtCore import Qt, pyqtSlot
+from PySide6.QtCore import Qt, Slot
 
 from spotify_downloader_ui.services.config_service import ConfigService
 from spotify_downloader_ui.services.error_service import ErrorService
@@ -301,7 +301,7 @@ class SettingsDialog(QDialog):
         
         logger.info("Settings saved")
     
-    @pyqtSlot()
+    @Slot()
     def _on_output_dir_browse(self):
         """Handle output directory browse button click."""
         current_dir = self.output_dir_input.text()
@@ -314,7 +314,7 @@ class SettingsDialog(QDialog):
         if dir_path:
             self.output_dir_input.setText(dir_path)
     
-    @pyqtSlot()
+    @Slot()
     def _on_credentials_browse(self):
         """Handle credentials file browse button click."""
         current_path = self.credentials_path_input.text()
@@ -330,7 +330,7 @@ class SettingsDialog(QDialog):
         if file_path:
             self.credentials_path_input.setText(file_path)
     
-    @pyqtSlot()
+    @Slot()
     def _on_save_credentials(self):
         """Handle save credentials button click."""
         # Check for required values
@@ -392,7 +392,7 @@ class SettingsDialog(QDialog):
         except Exception as e:
             self.error_service.handle_error(e, self)
     
-    @pyqtSlot()
+    @Slot()
     def _on_import_settings(self):
         """Handle import settings button click."""
         file_path, _ = QFileDialog.getOpenFileName(
@@ -420,7 +420,7 @@ class SettingsDialog(QDialog):
             except Exception as e:
                 self.error_service.handle_error(e, self)
     
-    @pyqtSlot()
+    @Slot()
     def _on_export_settings(self):
         """Handle export settings button click."""
         file_path, _ = QFileDialog.getSaveFileName(
@@ -447,7 +447,7 @@ class SettingsDialog(QDialog):
             except Exception as e:
                 self.error_service.handle_error(e, self)
     
-    @pyqtSlot()
+    @Slot()
     def _on_reset_settings(self):
         """Handle reset settings button click."""
         reply = QMessageBox.question(

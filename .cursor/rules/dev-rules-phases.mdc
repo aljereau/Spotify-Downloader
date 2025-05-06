@@ -1,0 +1,322 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Development Rules & Workflow Standards
+
+- **Backend Integrity**
+  - Never modify backend code unless absolutely necessary and explicitly approved
+  - Backend functionality must remain operational at all times
+  - Make service layer wrappers for all backend interactions
+  - Test against the original CLI functionality to verify integrity
+
+- **Sequential Development**
+  - Phases must be implemented strictly in order
+  - All tasks within a phase must be validated before moving to the next phase
+  - Dependencies between phases must be respected
+  - No skipping ahead to later phases until earlier phases are complete
+
+- **Validation First**
+  - Each component must be validated before moving forward
+  - Validation must include automated tests where possible
+  - User testing must be performed for UI components
+  - Evidence of validation must be documented
+
+- **Documentation Consistency**
+  - Documentation must be updated at each milestone
+  - README.md updates are required after each phase
+  - Technical documentation must reflect the current state
+  - Code documentation must follow established standards
+
+- **Structured Progress**
+  - Progress must be tracked at the task level, not just phase level
+  - Progress tracking documents must be kept up to date
+  - Issues and blockers must be documented immediately
+  - Status updates should reference specific task IDs
+
+## Documentation System & Workflow
+
+### Document Relationships & Usage
+
+- **Master Reference Documents**
+  - [PROJECT_ROADMAP.mdc](mdc:UI/PROJECT_ROADMAP.mdc)PROJECT_ROADMAP.mdc: High-level overview and navigation [PROJECT_ROADMAP.mdc](mdc:UI/PROJECT_ROADMAP.mdc)
+  - [DOCUMENTATION_FLOW.mdc](mdc:UI/DOCUMENTATION_FLOW.mdc)DOCUMENTATION_FLOW.mdc: Visual guide to document relationships
+  - [DEVELOPMENT_RULES.mdc](mdc:UI/DEVELOPMENT_RULES.mdc)DEVELOPMENT_RULES.mdc (this document): Process guidelines
+  - [PROGRESS_TEMPLATE.mdc](mdc:UI/PROGRESS_TEMPLATE.mdc)PROGRESS_TEMPLATE.mdc: Template for progress tracking
+
+- **Phase Definition Documents**
+  - @PHASE_1_FOUNDATION.mdc: Phase 1 specifications
+  - @PHASE_2_CORE_UI.mdc: Phase 2 specifications
+  - @PHASE_3_PROCESS_VISUALIZATION.mdc: Phase 3 specifications
+  - @PHASE_4_RESULTS_DISPLAY.mdc: Phase 4 specifications
+  - @PHASE_5_ADVANCED_FEATURES.mdc: Phase 5 specifications
+  - @PHASE_6_PACKAGING.mdc: Phase 6 specifications
+
+- **Progress Tracking Documents**
+  - @PHASE_1_PROGRESS.mdc: Phase 1 progress
+  - Additional progress documents created as phases begin
+
+### Development Workflow
+
+- **Preparation Process**
+  - Review the PROJECT_ROADMAP to understand context
+  - Study the relevant Phase Definition document
+  - Verify completion of previous phases via Progress documents
+  - Initialize the Progress document for the current phase
+  - Complete the Pre-Phase Validation section
+
+- **Implementation Process**
+  - Update Progress document as tasks progress through statuses
+  - Document validation evidence for completed tasks
+  - Record issues and blockers as encountered
+  - Reference Phase Definition document for guidelines
+  - Follow code quality standards in this document
+
+- **Validation Process**
+  - Perform component validation per requirements
+  - Document validation evidence with screenshots or test results
+  - Mark components as VALIDATED only after meeting criteria
+  - Update the Phase Validation section in Progress document
+
+- **Phase Completion Process**
+  - Complete all items in the Phase Completion Checklist
+  - Conduct retrospective and document findings
+  - Update README.md with new features
+  - Prepare for the next phase
+
+### Documentation Guidelines
+
+- **Cross-Referencing**
+  - Use MDC links when referencing other documents: `@title`
+  - Reference specific task IDs when documenting implementation
+  - Include Progress document references in commit messages
+
+- **Update Frequency**
+  - PROJECT_ROADMAP: Update only for major structural changes
+  - Phase Definition documents: Generally static, update only if scope changes
+  - Progress Tracking documents: Update daily during active development
+  - DEVELOPMENT_RULES: Update when process improvements are identified
+
+## Phase Transition Rules
+
+- **Pre-Phase Validation Requirements**
+  - Review all completed work from previous phases
+  - Verify all components from previous phases function correctly
+  - Check documentation accuracy for completed work
+  - Identify dependencies needed from previous phases
+
+- **Component Completion Criteria**
+  - Each numbered task must have explicit completion evidence
+  - Unit tests must pass for each component
+  - Components must work in isolation and integration contexts
+  - No regressions in previously completed components
+
+- **Progress Tracking Requirements**
+  - Each phase must have a PROGRESS.md file for task status
+  - Tasks must use statuses: NOT_STARTED, IN_PROGRESS, COMPLETED, VALIDATED
+  - Each completed task must include validation evidence
+  - Progress tracking must be updated with each commit
+
+- **Documentation Update Protocol**
+  - README.md must be updated after completing each phase
+  - Architecture documentation must be updated with new patterns
+  - UI component documentation must be maintained alongside code
+  - Validation notes must be captured for future reference
+
+## Component Testing Framework
+
+- **Testing Timeline**
+  - **During Development**: Create tests as you build each component
+  - **Component Completion**: Run full component test suite before marking as completed
+  - **Phase Integration**: Run integration tests with other phase components
+  - **Phase Completion**: Run comprehensive tests for the entire phase
+  - **Pre-Next Phase**: Re-run all previous phase tests to ensure no regressions
+
+- **Test Types Required**
+  - **Unit Tests**: Test individual methods and functions
+  - **Component Tests**: Test component behavior in isolation
+  - **Integration Tests**: Test components working together
+  - **Visual Tests**: Interactive tests showing working UI with sample data
+  - **Edge Case Tests**: Test boundary conditions and error handling
+
+- **Test Structure**
+  ```
+  spotify_downloader_ui/tests/
+  ├── __init__.py
+  ├── test_utils.py                 # Test utilities and mock services
+  ├── test_components.py            # Mock component implementations for testing
+  ├── run_phase{N}_tests.py         # Test runner for specific phase
+  ├── TESTING.md                    # Testing documentation
+  └── views/
+      ├── components/               # Tests for individual components
+      └── phase{N}/                 # Phase-specific integration tests
+  ```
+
+- **Test Creation Process**
+  - Create test directory matching component structure
+  - Add individual component test modules
+  - Add sample data generators for realistic testing
+  - Implement both automated and visual tests
+  - Create phase integration test suite
+
+- **Required Test Components**
+  - Mock services to isolate from backend
+  - Sample data generators with realistic test data
+  - Interactive test launchers for visual verification
+  - Integration test configurations for multi-component tests
+  - Edge case datasets to verify error handling
+
+- **Testing Commands**
+  ```bash
+  # Individual component tests
+  python -m unittest spotify_downloader_ui.tests.views.components.test_{component}
+  
+  # Interactive visual tests
+  python -m spotify_downloader_ui.tests.test_component {component}
+  
+  # Full phase tests 
+  python -m spotify_downloader_ui.tests.run_phase{N}_tests
+  
+  # Unit tests only
+  python -m spotify_downloader_ui.tests.run_phase{N}_tests --unit
+  
+  # Integration tests only
+  python -m spotify_downloader_ui.tests.run_phase{N}_tests --integration
+  ```
+
+- **Test Documentation**
+  - Create README.md in test directory explaining test structure
+  - Document sample data generators and their parameters
+  - Explain how to run and interpret tests
+  - Document any known test limitations
+  - Add detailed TESTING.md to explain testing approach
+
+- **Validation Requirements**
+  - Every component must have at least one unit test
+  - Every UI component must have a visual test
+  - Each phase must have a comprehensive integration test
+  - Include screenshots of working UI components in validation evidence
+  - Document test coverage in Progress documents
+
+## Development Process Rules
+
+- **Component Development Workflow**
+  ```python
+  # ✅ DO: Follow test-driven development
+  def test_playlist_input_validation():
+      # Test written before implementation
+      input_validator = PlaylistInputValidator()
+      assert input_validator.validate("https://open.spotify.com/playlist/valid") == True
+      assert input_validator.validate("invalid-url") == False
+  
+  # ❌ DON'T: Implement without tests
+  def playlist_input_validation(url):
+      # Implementation without tests leads to harder validation
+      return "open.spotify.com/playlist" in url
+  ```
+
+- **Code Quality Standards**
+  ```python
+  # ✅ DO: Use type hints and follow PEP 8
+  def process_playlist(playlist_id: str, options: Dict[str, Any]) -> PlaylistResult:
+      """Process a Spotify playlist and return analysis results.
+      
+      Args:
+          playlist_id: The Spotify playlist ID
+          options: Processing options
+          
+      Returns:
+          PlaylistResult object with analysis data
+      """
+      # Implementation follows single responsibility principle
+      
+  # ❌ DON'T: Write unclear, poorly typed code
+  def process(id, opts):
+      # No type hints
+      # No documentation
+      # Multiple responsibilities in one function
+  ```
+
+- **Branching Strategy**
+  - Create feature branches for each component
+    - Format: `feature/phase<number>-<component>`
+    - Example: `feature/phase2-playlist-input`
+  - Require pull requests before merging to main
+  - Pass CI/CD checks before merging
+  - No direct commits to main branch
+
+- **Commit Standards**
+  - Make atomic commits (one logical change)
+  - Follow message format: `[Phase X.Y] Component: Brief description`
+  - Include task ID in messages
+  - Reference documentation updates in commits
+
+## Validation Requirements
+
+- **Component Validation Process**
+  - Write automated tests for core functionality
+  - Document edge case testing
+  - Verify performance where applicable
+  - Test UI responsiveness
+  - Validate cross-platform compatibility
+
+- **Phase Validation Process**
+  - Verify all components in phase are VALIDATED
+  - Perform integration testing between components
+  - Conduct user workflow testing
+  - Review documentation for accuracy
+  - Validate phase performance as a whole
+
+- **Progress Validation Evidence**
+  - Include screenshots of working UI components
+  - Provide test results summary
+  - Document performance metrics where applicable
+  - List edge cases that were addressed
+  - Note any known limitations
+
+## Documentation Requirements
+
+- **Component Documentation**
+  - Purpose and functionality description
+  - Public API/interfaces documentation
+  - Usage examples
+  - Dependencies list
+  - Design decisions and trade-offs explanation
+  - Known limitations
+
+- **Phase Documentation**
+  - Overview of completed functionality
+  - Architecture diagram updates
+  - User workflow descriptions
+  - Technical achievements summary
+  - Lessons learned section
+
+- **README Updates**
+  - Update feature list with new capabilities
+  - Add screenshots of new UI components
+  - Revise installation/usage instructions
+  - Clarify current project status
+
+## Issue Management
+
+- **Issue Handling**
+  - Document issues immediately when discovered
+  - Escalate blockers in PROGRESS.md
+  - Get approval before implementing workarounds
+  - Document technical debt for later resolution
+
+- **Retrospective Process**
+  - Conduct brief retrospective after each phase
+  - Document successes and improvement areas
+  - Update rules based on lessons learned
+  - Apply insights to improve upcoming phases
+
+---
+
+These rules serve as the guiding principles for the UI development process. They ensure that development follows a structured, validated approach with clear documentation at each step, maintaining the integrity of both the UI components and the underlying backend functionality.
+
+
+
+
+

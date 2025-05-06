@@ -9,14 +9,14 @@ import logging
 import time
 from datetime import datetime, timedelta
 from typing import Dict, Optional, Tuple, Union
-from PyQt6.QtWidgets import (
+from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QProgressBar,
     QFrame, QSizePolicy, QToolTip
 )
-from PyQt6.QtCore import (
-    Qt, pyqtSignal, pyqtSlot, QSize, QTimer, QEvent, QPoint
+from PySide6.QtCore import (
+    Qt, Signal, Slot, QSize, QTimer, QEvent, QPoint, QObject
 )
-from PyQt6.QtGui import (
+from PySide6.QtGui import (
     QColor, QPalette, QFont, QMouseEvent, QIcon
 )
 
@@ -247,7 +247,7 @@ class RateLimitIndicator(QWidget):
                 tooltip_text += f"Reset Time: {time_str}"
             
             # Show custom tooltip
-            QToolTip.showText(event.globalPos(), tooltip_text)
+            QToolTip.showText(event.globalPosition().toPoint(), tooltip_text)
             return True
             
         return super().eventFilter(watched, event)

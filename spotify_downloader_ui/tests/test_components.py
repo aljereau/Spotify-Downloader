@@ -5,13 +5,13 @@ This module provides simple mock implementations of components
 that may have import issues in the actual codebase.
 """
 
-from PyQt6.QtWidgets import (
+from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QLabel, QHBoxLayout, QLineEdit, 
     QComboBox, QPushButton, QListWidget, QTabWidget, QFrame, 
     QGroupBox, QCheckBox, QRadioButton, QGridLayout
 )
-from PyQt6.QtCore import Qt, pyqtSignal
-from PyQt6.QtGui import QFont, QColor, QPalette
+from PySide6.QtCore import Qt, Signal
+from PySide6.QtGui import QFont, QColor, QPalette
 
 # Mock versions of problem components
 

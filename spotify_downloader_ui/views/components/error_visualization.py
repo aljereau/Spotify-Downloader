@@ -8,12 +8,12 @@ and suggestions for resolution.
 import logging
 import traceback
 from typing import Dict, List, Optional, Union, Tuple
-from PyQt6.QtWidgets import (
+from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, 
     QTextEdit, QFrame, QSizePolicy, QSpacerItem, QScrollArea
 )
-from PyQt6.QtCore import Qt, pyqtSignal, pyqtSlot, QSize
-from PyQt6.QtGui import (
+from PySide6.QtCore import Qt, Signal, Slot, QSize
+from PySide6.QtGui import (
     QIcon, QPixmap, QColor, QPalette, QFont, QTextCursor, 
     QTextCharFormat, QBrush
 )
@@ -26,8 +26,8 @@ class ErrorVisualization(QWidget):
     """Widget for visualizing errors with details and suggestions."""
     
     # Signals
-    retry_requested = pyqtSignal()
-    close_requested = pyqtSignal()
+    retry_requested = Signal()
+    close_requested = Signal()
     
     def __init__(self, parent=None):
         """Initialize the error visualization widget.

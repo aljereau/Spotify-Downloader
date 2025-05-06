@@ -7,13 +7,13 @@ import os
 import subprocess
 from typing import Dict, List
 
-from PyQt6.QtWidgets import (
+from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QTabWidget,
     QTableWidget, QTableWidgetItem, QHeaderView, QGroupBox, QSplitter,
     QCheckBox, QComboBox, QFormLayout, QFileDialog, QMessageBox, QFrame
 )
-from PyQt6.QtCore import Qt, pyqtSlot, QUrl
-from PyQt6.QtGui import QDesktopServices, QColor
+from PySide6.QtCore import Qt, Slot, QUrl
+from PySide6.QtGui import QDesktopServices, QColor
 
 from spotify_downloader_ui.services.config_service import ConfigService
 from spotify_downloader_ui.services.error_service import ErrorService
@@ -385,7 +385,7 @@ class ResultsView(QWidget):
         
         return score
     
-    @pyqtSlot()
+    @Slot()
     def _on_apply_filter_clicked(self):
         """Apply hidden gems filter and update the gems table."""
         if not self.tracks:
@@ -459,7 +459,7 @@ class ResultsView(QWidget):
         self.tabs.setTabText(1, f"Hidden Gems ({self.gems_table.rowCount()})")
         logger.info(f"Applied hidden gems filter: found {self.gems_table.rowCount()} tracks")
     
-    @pyqtSlot(int, int)
+    @Slot(int, int)
     def _on_track_link_clicked(self, row: int, column: int):
         """Handle track link clicked in the tracks table.
         
@@ -472,7 +472,7 @@ class ResultsView(QWidget):
             if link:
                 QDesktopServices.openUrl(QUrl(link))
     
-    @pyqtSlot(int, int)
+    @Slot(int, int)
     def _on_gem_link_clicked(self, row: int, column: int):
         """Handle track link clicked in the gems table.
         
@@ -485,7 +485,7 @@ class ResultsView(QWidget):
             if link:
                 QDesktopServices.openUrl(QUrl(link))
     
-    @pyqtSlot()
+    @Slot()
     def _on_open_output_clicked(self):
         """Handle open output folder button click."""
         if not self.output_dir or not os.path.exists(self.output_dir):
@@ -508,7 +508,7 @@ class ResultsView(QWidget):
         except Exception as e:
             self.error_service.handle_error(e, self)
     
-    @pyqtSlot()
+    @Slot()
     def _on_create_playlist_clicked(self):
         """Handle create playlist button click."""
         # Check if we're on the hidden gems tab
@@ -541,7 +541,7 @@ class ResultsView(QWidget):
                 "Please switch to the Hidden Gems tab and filter the tracks you want to include."
             )
     
-    @pyqtSlot()
+    @Slot()
     def _on_export_clicked(self):
         """Handle export results button click."""
         if not self.tracks:
@@ -607,7 +607,7 @@ class ResultsView(QWidget):
         except Exception as e:
             self.error_service.handle_error(e, self)
             
-    @pyqtSlot(list)
+    @Slot(list)
     def _on_download_completed(self, results: List[Dict]):
         """Handle download completion from the download tab.
         

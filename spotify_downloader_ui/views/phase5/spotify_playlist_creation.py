@@ -6,14 +6,14 @@ import logging
 from typing import Dict, List, Any, Optional
 from datetime import datetime
 
-from PyQt6.QtWidgets import (
+from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, 
     QLineEdit, QTextEdit, QComboBox, QCheckBox, QProgressBar,
     QListWidget, QListWidgetItem, QScrollArea, QFrame, QFileDialog,
     QTabWidget, QSplitter, QGroupBox, QGridLayout, QCompleter
 )
-from PyQt6.QtCore import Qt, pyqtSignal, pyqtSlot, QSize
-from PyQt6.QtGui import QIcon, QPixmap
+from PySide6.QtCore import Qt, Signal, Slot, QSize
+from PySide6.QtGui import QIcon, QPixmap
 
 from spotify_downloader_ui.services.config_service import ConfigService
 from spotify_downloader_ui.services.error_service import ErrorService
@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 class PlaylistMetadataEditor(QWidget):
     """Editor for playlist metadata (title, description, cover, privacy)."""
     
-    metadata_changed = pyqtSignal(dict)
+    metadata_changed = Signal(dict)
     
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -155,7 +155,7 @@ class PlaylistMetadataEditor(QWidget):
 class TrackSelectionList(QWidget):
     """Widget for selecting tracks to include in a playlist."""
     
-    selection_changed = pyqtSignal(list)
+    selection_changed = Signal(list)
     
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -280,7 +280,7 @@ class TrackSelectionList(QWidget):
 class PlaylistTemplateManager(QWidget):
     """Widget for managing playlist creation templates."""
     
-    template_selected = pyqtSignal(dict)
+    template_selected = Signal(dict)
     
     def __init__(self, parent=None):
         super().__init__(parent)

@@ -8,13 +8,13 @@ information.
 
 import logging
 from typing import Dict, List, Optional, Tuple
-from PyQt6.QtWidgets import (
+from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
     QProgressBar, QGroupBox, QTextEdit, QSplitter, QFrame,
     QGridLayout, QSizePolicy, QStackedWidget
 )
-from PyQt6.QtCore import Qt, pyqtSignal, pyqtSlot, QSize, QTimer
-from PyQt6.QtGui import QColor, QPixmap, QIcon
+from PySide6.QtCore import Qt, Signal, Slot, QSize, QTimer
+from PySide6.QtGui import QColor, QPixmap, QIcon
 
 from .multi_level_progress import MultiLevelProgressIndicator, ProgressLevel, ProgressState
 from .enhanced_progress_bar import EnhancedProgressBar
@@ -54,9 +54,9 @@ class ProcessVisualization(QWidget):
     """Comprehensive process visualization widget."""
     
     # Signals
-    cancel_requested = pyqtSignal()
-    pause_requested = pyqtSignal()
-    resume_requested = pyqtSignal()
+    cancel_requested = Signal()
+    pause_requested = Signal()
+    resume_requested = Signal()
     
     def __init__(self, parent=None):
         """Initialize the process visualization widget.
@@ -205,7 +205,7 @@ class ProcessVisualization(QWidget):
             # Update time in progress indicator
             self.progress_indicator.set_time_estimate(level, estimate['remaining_seconds'])
     
-    @pyqtSlot()
+    @Slot()
     def _on_pause_clicked(self):
         """Handle pause/resume button click."""
         self._is_paused = not self._is_paused

@@ -6,13 +6,13 @@ import logging
 from typing import List, Dict, Optional, Callable
 from enum import Enum
 
-from PyQt6.QtWidgets import (
+from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, 
     QToolBar, QSlider, QFrame, QSizePolicy, QComboBox,
     QCheckBox, QGroupBox, QGridLayout, QToolButton
 )
-from PyQt6.QtCore import Qt, pyqtSignal, pyqtSlot, QSize, QTimer
-from PyQt6.QtGui import QIcon, QAction
+from PySide6.QtCore import Qt, Signal, Slot, QSize, QTimer
+from PySide6.QtGui import QIcon, QAction, QAction, QAction
 
 from spotify_downloader_ui.services.config_service import ConfigService
 from spotify_downloader_ui.services.error_service import ErrorService
@@ -40,14 +40,14 @@ class OperationControl(QWidget):
     """Widget for controlling operations with advanced features."""
     
     # Signals
-    operation_start = pyqtSignal()
-    operation_pause = pyqtSignal()
-    operation_resume = pyqtSignal()
-    operation_cancel = pyqtSignal()
-    operation_retry = pyqtSignal()
-    operation_skip = pyqtSignal()
-    throttle_changed = pyqtSignal(int)  # Throttle percentage (0-100)
-    parameter_adjusted = pyqtSignal(str, object)  # parameter name, new value
+    operation_start = Signal()
+    operation_pause = Signal()
+    operation_resume = Signal()
+    operation_cancel = Signal()
+    operation_retry = Signal()
+    operation_skip = Signal()
+    throttle_changed = Signal(int)  # Throttle percentage (0-100)
+    parameter_adjusted = Signal(str, object)  # parameter name, new value
     
     def __init__(self, config_service: ConfigService, error_service: ErrorService):
         """Initialize the operation control.
@@ -431,7 +431,7 @@ class OperationControl(QWidget):
         # Emit signal for controller
         self.throttle_changed.emit(throttle_percent)
     
-    @pyqtSlot()
+    @Slot()
     def _on_start_clicked(self) -> None:
         """Handle start button click."""
         if self.operation_status == OperationStatus.IDLE or self.operation_status == OperationStatus.COMPLETED or self.operation_status == OperationStatus.FAILED:
@@ -441,33 +441,33 @@ class OperationControl(QWidget):
             self.operation_resume.emit()
             self.set_operation_status(OperationStatus.RUNNING)
     
-    @pyqtSlot()
+    @Slot()
     def _on_pause_clicked(self) -> None:
         """Handle pause button click."""
         if self.operation_status == OperationStatus.RUNNING:
             self.operation_pause.emit()
             self.set_operation_status(OperationStatus.PAUSED)
     
-    @pyqtSlot()
+    @Slot()
     def _on_cancel_clicked(self) -> None:
         """Handle cancel button click."""
         if self.operation_status in (OperationStatus.RUNNING, OperationStatus.PAUSED):
             self.operation_cancel.emit()
             self.set_operation_status(OperationStatus.CANCELLING)
     
-    @pyqtSlot()
+    @Slot()
     def _on_retry_clicked(self) -> None:
         """Handle retry button click."""
         if self.can_retry:
             self.operation_retry.emit()
     
-    @pyqtSlot()
+    @Slot()
     def _on_skip_clicked(self) -> None:
         """Handle skip button click."""
         if self.can_skip:
             self.operation_skip.emit()
     
-    @pyqtSlot(int)
+    @Slot(int)
     def _on_throttle_level_changed(self, index: int) -> None:
         """Handle throttle level combo box change.
         
@@ -484,7 +484,7 @@ class OperationControl(QWidget):
         # Apply throttling
         self._apply_throttle_level(level)
     
-    @pyqtSlot(int)
+    @Slot(int)
     def _on_throttle_value_changed(self, value: int) -> None:
         """Handle throttle slider value change.
         
@@ -500,7 +500,7 @@ class OperationControl(QWidget):
             # Emit signal
             self.throttle_changed.emit(value)
     
-    @pyqtSlot(int)
+    @Slot(int)
     def _on_auto_retry_changed(self, state: int) -> None:
         """Handle auto-retry checkbox change.
         
@@ -518,7 +518,7 @@ class OperationControl(QWidget):
             enabled
         )
     
-    @pyqtSlot(int)
+    @Slot(int)
     def _on_retry_count_changed(self, index: int) -> None:
         """Handle retry count combo box change.
         
@@ -533,7 +533,7 @@ class OperationControl(QWidget):
             value
         )
     
-    @pyqtSlot(int)
+    @Slot(int)
     def _on_graceful_shutdown_changed(self, state: int) -> None:
         """Handle graceful shutdown checkbox change.
         
@@ -548,7 +548,7 @@ class OperationControl(QWidget):
             enabled
         )
     
-    @pyqtSlot(int)
+    @Slot(int)
     def _on_save_state_changed(self, state: int) -> None:
         """Handle save state checkbox change.
         
@@ -563,7 +563,7 @@ class OperationControl(QWidget):
             enabled
         )
     
-    @pyqtSlot(int)
+    @Slot(int)
     def _on_avoid_rate_limits_changed(self, state: int) -> None:
         """Handle avoid rate limits checkbox change.
         
@@ -578,7 +578,7 @@ class OperationControl(QWidget):
             enabled
         )
     
-    @pyqtSlot()
+    @Slot()
     def _on_abort_shutdown(self) -> None:
         """Handle abort shutdown button click."""
         if self.shutdown_timer:

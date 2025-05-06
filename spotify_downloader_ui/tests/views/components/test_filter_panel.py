@@ -5,8 +5,8 @@ Tests for the FilterSidebar component.
 import sys
 import logging
 import unittest
-from PyQt6.QtWidgets import QApplication
-from PyQt6.QtCore import Qt, pyqtSignal
+from PySide6.QtWidgets import QApplication
+from PySide6.QtCore import Qt, Signal
 
 # Import mock component
 from spotify_downloader_ui.tests.test_components import FilterSidebar
@@ -74,7 +74,7 @@ def run_interactive_test():
     sidebar.apply_preset("hidden_gems")
     
     # Run the application event loop
-    return runner.exec()
+    return runner.exec_()
 
 if __name__ == "__main__":
     # Run unit tests if run with pytest

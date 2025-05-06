@@ -7,14 +7,14 @@ from typing import List, Dict, Optional, Any, Callable
 from enum import Enum
 from datetime import datetime
 
-from PyQt6.QtWidgets import (
+from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, 
     QScrollArea, QFrame, QLineEdit, QComboBox, QCheckBox,
     QGroupBox, QGridLayout, QSizePolicy, QSlider,
     QToolButton, QMenu
 )
-from PyQt6.QtCore import Qt, pyqtSignal, pyqtSlot, QSize, QDate
-from PyQt6.QtGui import QIcon
+from PySide6.QtCore import Qt, Signal, Slot, QSize, QDate
+from PySide6.QtGui import QIcon
 
 from spotify_downloader_ui.services.config_service import ConfigService
 from spotify_downloader_ui.services.error_service import ErrorService
@@ -59,7 +59,7 @@ class FilterCriteria:
 class FilterPanel(QWidget):
     """Widget for filtering track data."""
     
-    filter_changed = pyqtSignal(dict)  # Emits filter criteria when changed
+    filter_changed = Signal(dict)  # Emits filter criteria when changed
     
     def __init__(self, config_service: ConfigService, error_service: ErrorService):
         """Initialize the filter panel.
@@ -433,7 +433,7 @@ class FilterPanel(QWidget):
             # Notify of change
             self.filter_changed.emit(self.active_filters)
     
-    @pyqtSlot(int)
+    @Slot(int)
     def _on_operation_changed(self, index: int):
         """Handle filter operation change.
         
@@ -446,12 +446,12 @@ class FilterPanel(QWidget):
         # Update active filters with operation
         self._update_filter("_operation", operation.value)
     
-    @pyqtSlot()
+    @Slot()
     def _on_clear_all(self):
         """Handle clear all button click."""
         self.clear_filters()
     
-    @pyqtSlot()
+    @Slot()
     def _on_search(self):
         """Handle search input."""
         search_text = self.search_input.text()
@@ -462,7 +462,7 @@ class FilterPanel(QWidget):
             # Update filter
             self._update_filter("search", search_text)
     
-    @pyqtSlot(bool)
+    @Slot(bool)
     def _on_recent_toggled(self, checked: bool):
         """Handle recent searches group toggle.
         
@@ -472,7 +472,7 @@ class FilterPanel(QWidget):
         # This would show/hide the recent searches in a real implementation
         pass
     
-    @pyqtSlot(str)
+    @Slot(str)
     def _on_recent_search_clicked(self, search_text: str):
         """Handle click on a recent search.
         
@@ -485,7 +485,7 @@ class FilterPanel(QWidget):
         # Apply the search
         self._update_filter("search", search_text)
     
-    @pyqtSlot(str, str)
+    @Slot(str, str)
     def _on_text_filter_changed(self, field: str, text: str):
         """Handle text filter change.
         
@@ -498,7 +498,7 @@ class FilterPanel(QWidget):
         else:
             self._remove_filter(field)
     
-    @pyqtSlot(str, int, QLabel)
+    @Slot(str, int, QLabel)
     def _on_range_filter_changed(self, field: str, value: int, label: QLabel):
         """Handle range filter change.
         
@@ -513,7 +513,7 @@ class FilterPanel(QWidget):
         # Update filter
         self._update_filter(field, {"min": value})
     
-    @pyqtSlot(str, str)
+    @Slot(str, str)
     def _on_category_filter_changed(self, field: str, category: str):
         """Handle category filter change.
         
@@ -526,7 +526,7 @@ class FilterPanel(QWidget):
         else:
             self._remove_filter(field)
     
-    @pyqtSlot(str, str)
+    @Slot(str, str)
     def _on_date_filter_changed(self, field: str, period: str):
         """Handle date filter change.
         
@@ -539,7 +539,7 @@ class FilterPanel(QWidget):
         else:
             self._remove_filter(field)
     
-    @pyqtSlot(str, bool, int)
+    @Slot(str, bool, int)
     def _on_boolean_filter_changed(self, field: str, value: bool, state: int):
         """Handle boolean filter change.
         
@@ -555,7 +555,7 @@ class FilterPanel(QWidget):
             # This is simplified - a real implementation would be more complex
             self._remove_filter(field)
     
-    @pyqtSlot(str, bool)
+    @Slot(str, bool)
     def _on_filter_toggled(self, field: str, enabled: bool):
         """Handle filter group toggle.
         
@@ -572,7 +572,7 @@ class FilterPanel(QWidget):
         if not enabled:
             self._remove_filter(field)
     
-    @pyqtSlot(int)
+    @Slot(int)
     def _on_preset_selected(self, index: int):
         """Handle preset selection.
         
@@ -583,7 +583,7 @@ class FilterPanel(QWidget):
         if preset:
             self.apply_preset(preset)
     
-    @pyqtSlot()
+    @Slot()
     def _on_save_preset(self):
         """Handle save preset button click."""
         # In a real implementation, this would show a dialog to name and save the preset
@@ -618,7 +618,7 @@ class FilterSidebar:
         return self.filter_panel
     
     @property
-    def filter_changed(self) -> pyqtSignal:
+    def filter_changed(self) -> Signal:
         """Get the filter changed signal.
         
         Returns:

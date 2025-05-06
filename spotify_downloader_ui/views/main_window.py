@@ -3,12 +3,12 @@ Main window for the Spotify Downloader UI.
 """
 
 import logging
-from PyQt6.QtWidgets import (
+from PySide6.QtWidgets import (
     QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QTabWidget,
-    QToolBar, QStatusBar, QLabel, QAction, QPushButton, QMenu
+    QToolBar, QStatusBar, QLabel, QPushButton, QMenu
 )
-from PyQt6.QtCore import Qt, pyqtSlot
-from PyQt6.QtGui import QIcon
+from PySide6.QtCore import Qt, Slot
+from PySide6.QtGui import QIcon, QAction, QAction, QAction
 
 from spotify_downloader_ui.services.config_service import ConfigService
 from spotify_downloader_ui.services.error_service import ErrorService
@@ -38,8 +38,8 @@ class MainWindow(QMainWindow):
         self.error_service = error_service
         
         # Initialize additional services
-        self.playlist_service = PlaylistService(config_service, error_service)
-        self.spotify_service = SpotifyService(config_service, error_service)
+        self.playlist_service = PlaylistService()
+        self.spotify_service = SpotifyService()
         
         # Set up the UI
         self._init_ui()
@@ -157,7 +157,7 @@ class MainWindow(QMainWindow):
         self.playlist_service.playlist_processing_started.connect(self._on_processing_started)
         self.playlist_service.playlist_processed.connect(self._on_processing_completed)
     
-    @pyqtSlot(str, dict)
+    @Slot(str, dict)
     def _on_process_requested(self, url: str, options: dict):
         """Handle process request from playlist input view.
         
@@ -175,7 +175,7 @@ class MainWindow(QMainWindow):
         # Update status
         self.status_bar.showMessage(f"Processing playlist: {url}")
     
-    @pyqtSlot(str)
+    @Slot(str)
     def _on_processing_started(self, playlist_id: str):
         """Handle processing started.
         
@@ -187,7 +187,7 @@ class MainWindow(QMainWindow):
         # Update status
         self.status_bar.showMessage(f"Processing playlist: {playlist_id}")
     
-    @pyqtSlot(str, dict, list, str)
+    @Slot(str, dict, list, str)
     def _on_processing_completed(self, playlist_id: str, metadata: dict, tracks: list, output_dir: str):
         """Handle processing completion.
         
@@ -210,7 +210,7 @@ class MainWindow(QMainWindow):
         # Update status
         self.status_bar.showMessage(f"Completed processing playlist: {metadata.get('name', playlist_id)}")
     
-    @pyqtSlot()
+    @Slot()
     def _on_settings_action(self):
         """Handle settings action."""
         settings_dialog = SettingsDialog(
@@ -219,15 +219,15 @@ class MainWindow(QMainWindow):
             self
         )
         
-        result = settings_dialog.exec()
+        result = settings_dialog.exec_()
         if result == SettingsDialog.DialogCode.Accepted:
             # Handle settings update
             self.status_bar.showMessage("Settings updated")
     
-    @pyqtSlot()
+    @Slot()
     def _on_about_action(self):
         """Handle about action."""
-        from PyQt6.QtWidgets import QMessageBox
+        from PySide6.QtWidgets import QMessageBox
         
         QMessageBox.about(
             self,
@@ -236,15 +236,15 @@ class MainWindow(QMainWindow):
             "<p>Version 0.1.0</p>"
             "<p>A modern, user-friendly graphical interface for extracting and analyzing "
             "track information from Spotify playlists.</p>"
-            "<p>Built with PyQt6</p>"
+            "<p>Built with PySide6</p>"
             "<p>© 2023-2024 SpotifyDownloader</p>"
         )
     
-    @pyqtSlot()
+    @Slot()
     def _on_documentation_action(self):
         """Handle documentation action."""
-        from PyQt6.QtGui import QDesktopServices
-        from PyQt6.QtCore import QUrl
+        from PySide6.QtGui import QDesktopServices
+        from PySide6.QtCore import QUrl
         
         # Open GitHub repo or documentation site in the default browser
         QDesktopServices.openUrl(QUrl("https://github.com/aljereau/Spotify-Downloader"))

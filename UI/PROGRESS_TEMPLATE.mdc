@@ -1,5 +1,132 @@
 ---
-description:
-globs:
+description: 
+globs: 
 alwaysApply: false
 ---
+# Phase X Progress Tracking
+
+## Phase Overview
+- **Phase Name**: [Phase Name]
+- **Current Status**: [NOT_STARTED | IN_PROGRESS | COMPLETED | VALIDATED]
+- **Last Updated**: [Date]
+- **Updated By**: [Developer Name]
+
+## Pre-Phase Validation
+- [ ] Previous phase components reviewed
+- [ ] Previous phase functionality verified
+- [ ] Documentation from previous phase checked
+- [ ] Dependencies and interfaces identified
+
+## Task Status
+
+### 1. [Component Name]
+
+| Task ID | Description | Status | Started | Completed | Validated | Notes/Evidence |
+|---------|-------------|--------|---------|-----------|-----------|----------------|
+| 1.1 | [Task Description] | [NOT_STARTED] | | | | |
+| 1.2 | [Task Description] | [NOT_STARTED] | | | | |
+| 1.3 | [Task Description] | [NOT_STARTED] | | | | |
+| 1.4 | [Task Description] | [NOT_STARTED] | | | | |
+| 1.5 | [Task Description] | [NOT_STARTED] | | | | |
+| 1.6 | [Task Description] | [NOT_STARTED] | | | | |
+| 1.7 | [Task Description] | [NOT_STARTED] | | | | |
+| 1.8 | [Task Description] | [NOT_STARTED] | | | | |
+
+**Component Status**: [NOT_STARTED | IN_PROGRESS | COMPLETED | VALIDATED]
+
+### 2. [Component Name]
+
+| Task ID | Description | Status | Started | Completed | Validated | Notes/Evidence |
+|---------|-------------|--------|---------|-----------|-----------|----------------|
+| 2.1 | [Task Description] | [NOT_STARTED] | | | | |
+| 2.2 | [Task Description] | [NOT_STARTED] | | | | |
+| 2.3 | [Task Description] | [NOT_STARTED] | | | | |
+| 2.4 | [Task Description] | [NOT_STARTED] | | | | |
+| 2.5 | [Task Description] | [NOT_STARTED] | | | | |
+| 2.6 | [Task Description] | [NOT_STARTED] | | | | |
+| 2.7 | [Task Description] | [NOT_STARTED] | | | | |
+| 2.8 | [Task Description] | [NOT_STARTED] | | | | |
+
+**Component Status**: [NOT_STARTED | IN_PROGRESS | COMPLETED | VALIDATED]
+
+### 3. [Component Name]
+
+| Task ID | Description | Status | Started | Completed | Validated | Notes/Evidence |
+|---------|-------------|--------|---------|-----------|-----------|----------------|
+| 3.1 | [Task Description] | [NOT_STARTED] | | | | |
+| 3.2 | [Task Description] | [NOT_STARTED] | | | | |
+| 3.3 | [Task Description] | [NOT_STARTED] | | | | |
+| 3.4 | [Task Description] | [NOT_STARTED] | | | | |
+| 3.5 | [Task Description] | [NOT_STARTED] | | | | |
+| 3.6 | [Task Description] | [NOT_STARTED] | | | | |
+| 3.7 | [Task Description] | [NOT_STARTED] | | | | |
+| 3.8 | [Task Description] | [NOT_STARTED] | | | | |
+
+**Component Status**: [NOT_STARTED | IN_PROGRESS | COMPLETED | VALIDATED]
+
+### 4. [Component Name]
+
+| Task ID | Description | Status | Started | Completed | Validated | Notes/Evidence |
+|---------|-------------|--------|---------|-----------|-----------|----------------|
+| 4.1 | [Task Description] | [NOT_STARTED] | | | | |
+| 4.2 | [Task Description] | [NOT_STARTED] | | | | |
+| 4.3 | [Task Description] | [NOT_STARTED] | | | | |
+| 4.4 | [Task Description] | [NOT_STARTED] | | | | |
+| 4.5 | [Task Description] | [NOT_STARTED] | | | | |
+| 4.6 | [Task Description] | [NOT_STARTED] | | | | |
+| 4.7 | [Task Description] | [NOT_STARTED] | | | | |
+| 4.8 | [Task Description] | [NOT_STARTED] | | | | |
+
+**Component Status**: [NOT_STARTED | IN_PROGRESS | COMPLETED | VALIDATED]
+
+## Phase Validation
+
+| Validation Criteria | Status | Evidence | Notes |
+|---------------------|--------|----------|-------|
+| All components validated | [NOT_STARTED] | | |
+| Integration tests passing | [NOT_STARTED] | | |
+| User workflow testing | [NOT_STARTED] | | |
+| Documentation reviewed | [NOT_STARTED] | | |
+| Performance validation | [NOT_STARTED] | | |
+
+## Issues and Blockers
+
+| Issue ID | Description | Impact | Status | Resolution |
+|----------|-------------|--------|--------|------------|
+| | | | | |
+
+## Technical Debt
+
+| ID | Description | Priority | Plan to Address |
+|----|-------------|----------|----------------|
+| | | | |
+
+## Phase Completion Checklist
+
+- [ ] All tasks marked as VALIDATED
+- [ ] README.md updated with new features
+- [ ] Architecture documentation updated
+- [ ] Known issues documented
+- [ ] Retrospective completed
+
+## Retrospective Notes
+
+### What Went Well
+- 
+
+### What Could Be Improved
+- 
+
+### Action Items for Next Phase
+- 
+
+---
+
+Template Instructions:
+1. Create a copy of this template for each phase, naming it PHASE_X_PROGRESS.mdc where X is the phase number
+2. Fill in the Phase Name and start date
+3. Update the task descriptions from the phase document
+4. Update this document as tasks progress through their lifecycle
+5. Include evidence for validation (screenshots, test results, etc.)
+6. Complete the retrospective section after phase completion
+

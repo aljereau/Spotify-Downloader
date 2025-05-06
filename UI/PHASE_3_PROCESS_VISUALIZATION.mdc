@@ -1,5 +1,159 @@
 ---
-description:
-globs:
+description: 
+globs: 
 alwaysApply: false
 ---
+# Phase 3: Process Visualization
+
+## Overview
+
+This phase focuses on creating real-time visualizations and feedback mechanisms for the extraction and analysis processes. Users need clear visibility into the progress of operations, especially for large playlists that may take time to process. This phase will implement intuitive progress indicators, task queue management, and operational control features.
+
+## Objectives
+
+1. Implement progress indicators and status updates
+2. Create task queue visualization and management
+3. Develop cancellation and pause functionality
+4. Add real-time log viewing
+
+## Detailed Tasks
+
+### 1. Progress Visualization
+
+- **1.1** Design multi-level progress indicators
+  - Overall process progress
+  - Per-playlist progress
+  - Current operation progress
+- **1.2** Implement customizable progress bar components
+- **1.3** Create progress overlay for long-running operations
+- **1.4** Add time remaining estimations
+- **1.5** Develop rate limiting indicators
+- **1.6** Create completion animations
+- **1.7** Implement error state visualizations
+- **1.8** Add operation phase indicators
+
+### 2. Task Queue Management
+
+- **2.1** Design task queue interface
+  - Playlist processing queue
+  - Analysis tasks
+  - Download tasks
+- **2.2** Implement drag-and-drop queue reordering
+- **2.3** Create task priority system
+- **2.4** Add task dependency visualization
+- **2.5** Develop queue statistics view
+  - Estimated completion time
+  - Resource usage
+  - Tasks completed/pending
+- **2.6** Implement batch operations on queue items
+- **2.7** Create task details view
+- **2.8** Add task filtering and search
+
+### 3. Operation Control
+
+- **3.1** Implement task cancellation functionality
+- **3.2** Develop pause/resume for operations
+- **3.3** Create throttling controls
+- **3.4** Implement task retry mechanisms
+- **3.5** Add individual task cancellation
+- **3.6** Develop graceful shutdown handling
+- **3.7** Create recovery from interruption
+- **3.8** Implement operation parameter adjustment mid-process
+
+### 4. Real-Time Logging
+
+- **4.1** Design log viewer component
+- **4.2** Implement log level filtering
+- **4.3** Add log search functionality
+- **4.4** Create log highlighting for important events
+- **4.5** Develop log export options
+- **4.6** Add collapsible log groups
+- **4.7** Implement auto-scroll with pause detection
+- **4.8** Create log entry linking to relevant UI elements
+
+## Implementation Guidelines
+
+### Progress Visualization Design
+
+- Use consistent color coding for states (running, paused, error, etc.)
+- Implement smooth animations for progress updates
+- Ensure progress indicators are accessible (screen readers)
+- Use both visual and textual representation of progress
+- Maintain responsive UI during progress updates
+- Design progress components to be visually compact yet informative
+
+### Task Queue Architecture
+
+- Implement producer-consumer pattern for task processing
+- Create observable queue model for UI updates
+- Use background worker processes for task execution
+- Implement proper task cancellation handling
+- Ensure thread safety in queue operations
+- Add persistent queue storage for recovering from crashes
+
+### Operation Control Principles
+
+- Create clear visual distinction between controls
+- Implement proper cleanup on cancellation
+- Add confirmation dialogs for destructive actions
+- Create keyboard shortcuts for common operations
+- Ensure all control operations are atomic
+- Add proper error handling for control operations
+
+### Logging Integration
+
+- Integrate with existing logging infrastructure
+- Add structured logging for better filtering
+- Implement circular buffer for log history
+- Create separate log files for UI-specific logs
+- Add debug mode with extended logging
+- Implement log rotation for extended usage
+
+## Deliverables
+
+1. Complete progress visualization system
+2. Task queue management interface
+3. Operation control functionality
+4. Real-time log viewer
+5. Technical documentation
+6. User guide for process monitoring
+
+## Testing Criteria
+
+- Progress indicators accurately reflect actual progress
+- Task queue correctly manages and executes tasks
+- Cancellation and pause functionality works reliably
+- Log viewer displays real-time information
+- UI remains responsive during all operations
+- Recovery works properly after interruptions
+
+## Development Tools
+
+- PyQt5 for implementation
+- QThreadPool for task execution
+- Python's logging module integration
+- Unit tests for core functionality
+- Automated UI tests for critical components
+
+## Dependencies
+
+- Phase 1 foundation components
+- Phase 2 core UI components
+- PyQt5
+- QScintilla (for log viewer)
+- Python concurrent.futures (for task execution)
+
+## Estimated Timeline
+
+- Progress Visualization: 6 days
+- Task Queue Management: 7 days
+- Operation Control: 5 days
+- Real-Time Logging: 4 days
+- Testing & Bug Fixing: 5 days
+
+**Total**: 27 days
+
+## Next Phase
+
+After successfully implementing the process visualization systems, we will move to [Phase 4: Results Display](mdc:UI/PHASE_4_RESULTS_DISPLAY.mdc) which will focus on presenting the extracted and analyzed data to users in meaningful ways.
+

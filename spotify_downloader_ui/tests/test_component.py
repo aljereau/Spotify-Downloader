@@ -14,7 +14,7 @@ Available components:
 import sys
 import logging
 import importlib
-from PyQt6.QtWidgets import QApplication
+from PySide6.QtWidgets import QApplication
 import argparse
 
 from spotify_downloader_ui.tests.test_utils import get_application

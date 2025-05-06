@@ -6,15 +6,15 @@ import logging
 from typing import Dict, List, Any, Optional
 from functools import partial
 
-from PyQt6.QtWidgets import (
+from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, 
     QComboBox, QTreeWidget, QTreeWidgetItem, QGroupBox, 
     QGridLayout, QCheckBox, QRadioButton, QFileDialog,
     QListWidget, QTabWidget, QLineEdit, QDateEdit, QTimeEdit,
     QScrollArea, QFrame, QStackedWidget
 )
-from PyQt6.QtCore import Qt, pyqtSignal, QDate, QTime
-from PyQt6.QtGui import QFont, QIcon
+from PySide6.QtCore import Qt, Signal, QDate, QTime
+from PySide6.QtGui import QFont, QIcon
 
 from spotify_downloader_ui.services.config_service import ConfigService
 from spotify_downloader_ui.services.error_service import ErrorService
@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 class DataSourceSelector(QWidget):
     """Widget for selecting data sources to export."""
     
-    selection_changed = pyqtSignal(dict)
+    selection_changed = Signal(dict)
     
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -130,7 +130,7 @@ class DataSourceSelector(QWidget):
 class FormatSelector(QWidget):
     """Widget for selecting export formats."""
     
-    format_changed = pyqtSignal(dict)
+    format_changed = Signal(dict)
     
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -229,7 +229,7 @@ class FormatSelector(QWidget):
 class TemplateSelector(QWidget):
     """Widget for selecting export templates."""
     
-    template_changed = pyqtSignal(str)
+    template_changed = Signal(str)
     
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -295,7 +295,7 @@ class TemplateSelector(QWidget):
 class DestinationSelector(QWidget):
     """Widget for selecting export destination."""
     
-    destination_changed = pyqtSignal(dict)
+    destination_changed = Signal(dict)
     
     def __init__(self, parent=None):
         super().__init__(parent)

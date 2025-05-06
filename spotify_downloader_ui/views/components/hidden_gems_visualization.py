@@ -7,16 +7,16 @@ from typing import List, Dict, Optional, Any, Callable
 from enum import Enum
 import math
 
-from PyQt6.QtWidgets import (
+from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, 
     QScrollArea, QFrame, QTabWidget, QToolBar, QToolButton,
-    QSplitter, QMenu, QAction, QSlider, QCheckBox,
+    QSplitter, QMenu, QSlider, QCheckBox,
     QGroupBox, QGridLayout, QSizePolicy, QComboBox
 )
-from PyQt6.QtCore import Qt, pyqtSignal, pyqtSlot, QSize, QRectF
-from PyQt6.QtGui import QIcon, QPixmap, QImage, QPainter, QColor, QPen, QBrush, QLinearGradient, QPainterPath, QFont
+from PySide6.QtCore import Qt, Signal, Slot, QSize, QRectF
+from PySide6.QtGui import QIcon, QPixmap, QImage, QPainter, QColor, QPen, QBrush, QLinearGradient, QPainterPath, QFont, QAction, QAction, QAction
 
-from PyQt6.QtCharts import QChart, QChartView, QLineSeries, QBarSeries, QBarSet, QBarCategoryAxis, QValueAxis, QPieSeries
+from PySide6.QtCharts import QChart, QChartView, QLineSeries, QBarSeries, QBarSet, QBarCategoryAxis, QValueAxis, QPieSeries
 
 from spotify_downloader_ui.services.config_service import ConfigService
 from spotify_downloader_ui.services.error_service import ErrorService
@@ -336,7 +336,7 @@ class HiddenGemsScoreView(QWidget):
         else:
             return QColor(153, 153, 153)  # Gray for quartz
     
-    @pyqtSlot(int)
+    @Slot(int)
     def _on_threshold_changed(self, value: int):
         """Handle threshold slider change.
         
@@ -350,7 +350,7 @@ class HiddenGemsScoreView(QWidget):
         self._update_chart(self.track_scores)
         self._update_categories()
     
-    @pyqtSlot()
+    @Slot()
     def _on_weights_changed(self):
         """Handle weight slider changes."""
         # Update labels
@@ -362,14 +362,14 @@ class HiddenGemsScoreView(QWidget):
         weights = {name: slider.value() for name, (slider, _) in self.weight_sliders.items()}
         logger.info(f"Score weights updated: {weights}")
     
-    @pyqtSlot()
+    @Slot()
     def _on_create_playlist(self):
         """Handle create playlist button click."""
         # In a real implementation, this would create a playlist from gems
         # For now, just log the action
         logger.info(f"Create playlist from gems requested (threshold: {self.threshold}%)")
     
-    @pyqtSlot()
+    @Slot()
     def _on_export(self):
         """Handle export button click."""
         # In a real implementation, this would export gem data
@@ -498,7 +498,7 @@ class ArtistClusterView(QWidget):
         
         self.chart_view.setChart(chart)
     
-    @pyqtSlot(int)
+    @Slot(int)
     def _on_view_changed(self, index: int):
         """Handle view type change.
         
@@ -507,7 +507,7 @@ class ArtistClusterView(QWidget):
         """
         self._update_chart()
     
-    @pyqtSlot(int)
+    @Slot(int)
     def _on_show_names_changed(self, state: int):
         """Handle show names checkbox change.
         
@@ -519,7 +519,7 @@ class ArtistClusterView(QWidget):
 class GemIndicator(QWidget):
     """Widget for displaying a visual indicator for gem classification."""
     
-    clicked = pyqtSignal()
+    clicked = Signal()
     
     def __init__(self, category: GemCategory, parent=None):
         """Initialize the gem indicator.
@@ -553,10 +553,10 @@ class GemIndicator(QWidget):
         
         if self.category == GemCategory.DIAMOND:
             # Diamond shape
-            path.moveTo(rect.center().x(), rect.top())
-            path.lineTo(rect.right(), rect.center().y())
-            path.lineTo(rect.center().x(), rect.bottom())
-            path.lineTo(rect.left(), rect.center().y())
+            path.moveTo(rect.center().position().position().x(), rect.top())
+            path.lineTo(rect.right(), rect.center().position().position().y())
+            path.lineTo(rect.center().position().position().x(), rect.bottom())
+            path.lineTo(rect.left(), rect.center().position().position().y())
             path.closeSubpath()
         elif self.category == GemCategory.RUBY:
             # Ruby shape (octagon)
@@ -719,7 +719,7 @@ class PopularityComparisonView(QWidget):
         
         self.chart_view.setChart(chart)
     
-    @pyqtSlot(int)
+    @Slot(int)
     def _on_invert_changed(self, state: int):
         """Handle invert checkbox change.
         
@@ -728,7 +728,7 @@ class PopularityComparisonView(QWidget):
         """
         self._update_chart()
     
-    @pyqtSlot(int)
+    @Slot(int)
     def _on_top_percent_changed(self, index: int):
         """Handle top percent combo change.
         

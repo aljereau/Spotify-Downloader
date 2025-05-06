@@ -3,12 +3,12 @@ Playlist input view for entering and validating Spotify playlist URLs.
 """
 
 import logging
-from PyQt6.QtWidgets import (
+from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton,
     QGroupBox, QCheckBox, QFileDialog, QGridLayout, QComboBox,
     QFormLayout, QFrame, QSizePolicy
 )
-from PyQt6.QtCore import Qt, pyqtSignal, pyqtSlot
+from PySide6.QtCore import Qt, Signal, Slot
 
 from spotify_downloader_ui.services.config_service import ConfigService
 from spotify_downloader_ui.services.error_service import ErrorService
@@ -21,7 +21,7 @@ class PlaylistInputView(QWidget):
     """Widget for entering and validating Spotify playlist URLs."""
     
     # Signals
-    process_requested = pyqtSignal(str, dict)  # url, options
+    process_requested = Signal(str, dict)  # url, options
     
     def __init__(self, playlist_service: PlaylistService, spotify_service: SpotifyService,
                 config_service: ConfigService, error_service: ErrorService):
@@ -201,7 +201,7 @@ class PlaylistInputView(QWidget):
         # URL input enter key
         self.url_input.returnPressed.connect(self._on_validate_clicked)
     
-    @pyqtSlot()
+    @Slot()
     def _on_validate_clicked(self):
         """Handle validate button click."""
         url = self.url_input.text().strip()
@@ -216,7 +216,7 @@ class PlaylistInputView(QWidget):
             # Now get metadata
             self.playlist_service.get_playlist_metadata(url)
     
-    @pyqtSlot(str)
+    @Slot(str)
     def _on_validation_completed(self, playlist_id: str):
         """Handle playlist URL validation completion.
         
@@ -225,7 +225,7 @@ class PlaylistInputView(QWidget):
         """
         self.status_label.setText(f"Valid playlist ID: {playlist_id}")
     
-    @pyqtSlot(dict)
+    @Slot(dict)
     def _on_metadata_loaded(self, metadata: dict):
         """Handle playlist metadata loading.
         
@@ -244,7 +244,7 @@ class PlaylistInputView(QWidget):
         
         self.status_label.setText(f"Playlist loaded: {metadata.get('name', 'Unknown')}")
     
-    @pyqtSlot()
+    @Slot()
     def _on_process_clicked(self):
         """Handle process button click."""
         url = self.url_input.text().strip()
@@ -263,7 +263,7 @@ class PlaylistInputView(QWidget):
         
         self.status_label.setText("Processing playlist...")
     
-    @pyqtSlot()
+    @Slot()
     def _on_browse_clicked(self):
         """Handle browse button click for playlist file."""
         file_path, _ = QFileDialog.getOpenFileName(
@@ -289,7 +289,7 @@ class PlaylistInputView(QWidget):
             except Exception as e:
                 self.error_service.handle_error(e, self)
     
-    @pyqtSlot()
+    @Slot()
     def _on_output_dir_clicked(self):
         """Handle output directory button click."""
         current_dir = self.output_dir_input.text()
@@ -304,7 +304,7 @@ class PlaylistInputView(QWidget):
             self.config_service.set_setting("output/directory", dir_path)
             self.status_label.setText(f"Output directory set to: {dir_path}")
     
-    @pyqtSlot(bool)
+    @Slot(bool)
     def _on_hidden_gems_toggled(self, checked: bool):
         """Handle hidden gems checkbox toggle.
         

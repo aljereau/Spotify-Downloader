@@ -1,0 +1,20 @@
+#!/usr/bin/env python3
+"""
+Entry point script for Spotify Downloader command-line interface.
+This script is installed as the 'spotify-downloader' command.
+"""
+
+import sys
+import os
+from pathlib import Path
+
+# Add the parent directory to the Python path
+script_dir = Path(__file__).resolve().parent
+repo_root = script_dir.parent
+sys.path.insert(0, str(repo_root))
+
+# Import and run the main CLI function
+from spotify_downloader_ui.cli import main
+
+if __name__ == "__main__":
+    sys.exit(main()) 

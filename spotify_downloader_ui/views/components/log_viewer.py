@@ -8,14 +8,14 @@ from enum import Enum
 from typing import List, Dict, Optional
 from datetime import datetime
 
-from PyQt6.QtWidgets import (
+from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, 
     QTextEdit, QComboBox, QLineEdit, QToolBar, QFrame,
     QCheckBox, QSplitter, QMenu, QToolButton, QFileDialog, 
     QScrollArea, QSizePolicy
 )
-from PyQt6.QtCore import Qt, pyqtSignal, pyqtSlot, QSize, QTimer
-from PyQt6.QtGui import QTextCursor, QColor, QTextCharFormat, QAction, QIcon, QTextDocument
+from PySide6.QtCore import Qt, Signal, Slot, QSize, QTimer
+from PySide6.QtGui import QTextCursor, QColor, QTextCharFormat, QAction, QIcon, QTextDocument, QAction, QAction
 
 from spotify_downloader_ui.services.config_service import ConfigService
 from spotify_downloader_ui.services.error_service import ErrorService
@@ -616,7 +616,7 @@ class LogViewer(QWidget):
             self.auto_scroll = False
             self.auto_scroll_check.setChecked(False)
     
-    @pyqtSlot(int)
+    @Slot(int)
     def _on_level_filter_changed(self, index: int) -> None:
         """Handle change in log level filter.
         
@@ -629,13 +629,13 @@ class LogViewer(QWidget):
         # Refresh display
         self._update_log_display()
     
-    @pyqtSlot()
+    @Slot()
     def _on_search(self) -> None:
         """Handle search request."""
         self.active_filters['search_text'] = self.search_box.text()
         self._search_logs()
     
-    @pyqtSlot(str)
+    @Slot(str)
     def _on_search_text_changed(self, text: str) -> None:
         """Handle search text changes.
         
@@ -651,7 +651,7 @@ class LogViewer(QWidget):
             self._update_search_buttons()
             self._update_log_display()
     
-    @pyqtSlot()
+    @Slot()
     def _on_search_next(self) -> None:
         """Navigate to next search result."""
         if not self.search_results:
@@ -662,7 +662,7 @@ class LogViewer(QWidget):
             self._update_search_buttons()
             self._update_log_display()
     
-    @pyqtSlot()
+    @Slot()
     def _on_search_prev(self) -> None:
         """Navigate to previous search result."""
         if not self.search_results or self.current_result_index <= 0:
@@ -672,7 +672,7 @@ class LogViewer(QWidget):
         self._update_search_buttons()
         self._update_log_display()
     
-    @pyqtSlot(int)
+    @Slot(int)
     def _on_auto_scroll_changed(self, state: int) -> None:
         """Handle change in auto-scroll state.
         
@@ -687,7 +687,7 @@ class LogViewer(QWidget):
                 self.log_display.verticalScrollBar().maximum()
             )
     
-    @pyqtSlot(int)
+    @Slot(int)
     def _on_group_changed(self, state: int) -> None:
         """Handle change in grouping state.
         
@@ -701,7 +701,7 @@ class LogViewer(QWidget):
         # Refresh display
         self._update_log_display()
     
-    @pyqtSlot()
+    @Slot()
     def _on_expand_all(self) -> None:
         """Expand all collapsed groups."""
         for group in self.log_groups.values():
@@ -709,7 +709,7 @@ class LogViewer(QWidget):
         
         self._update_log_display()
     
-    @pyqtSlot()
+    @Slot()
     def _on_collapse_all(self) -> None:
         """Collapse all expanded groups."""
         for group in self.log_groups.values():
@@ -717,12 +717,12 @@ class LogViewer(QWidget):
         
         self._update_log_display()
     
-    @pyqtSlot()
+    @Slot()
     def _on_clear(self) -> None:
         """Handle clear button click."""
         self.clear_logs()
     
-    @pyqtSlot()
+    @Slot()
     def _on_export(self) -> None:
         """Handle export button click."""
         # Show file save dialog
@@ -736,7 +736,7 @@ class LogViewer(QWidget):
         if file_path:
             self.export_logs(file_path)
     
-    @pyqtSlot(int)
+    @Slot(int)
     def _on_scroll_changed(self, value: int) -> None:
         """Handle scrollbar value changes.
         

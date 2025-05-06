@@ -6,7 +6,7 @@ import logging
 import traceback
 import sys
 from typing import Callable, Dict, Optional, Any
-from PyQt6.QtWidgets import QMessageBox
+from PySide6.QtWidgets import QMessageBox
 
 # Import the backend error class for type checking
 try:
@@ -233,4 +233,4 @@ class ErrorService:
         msg_box.setText(message)
         msg_box.setIcon(icon)
         msg_box.setStandardButtons(QMessageBox.StandardButton.Ok)
-        msg_box.exec() 
+        msg_box.exec_() 

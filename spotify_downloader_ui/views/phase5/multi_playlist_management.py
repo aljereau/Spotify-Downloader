@@ -6,14 +6,14 @@ import logging
 from typing import Dict, List, Any, Optional
 from functools import partial
 
-from PyQt6.QtWidgets import (
+from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, 
     QLineEdit, QComboBox, QListWidget, QListWidgetItem, 
     QTabWidget, QSplitter, QTreeWidget, QTreeWidgetItem, 
     QGroupBox, QGridLayout, QMenu, QCheckBox, QProgressBar
 )
-from PyQt6.QtCore import Qt, pyqtSignal, pyqtSlot, QSize
-from PyQt6.QtGui import QIcon, QPixmap
+from PySide6.QtCore import Qt, Signal, Slot, QSize
+from PySide6.QtGui import QIcon, QPixmap
 
 from spotify_downloader_ui.services.config_service import ConfigService
 from spotify_downloader_ui.services.error_service import ErrorService
@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 class PlaylistCategoryManager(QWidget):
     """Widget for managing and categorizing playlists."""
     
-    category_changed = pyqtSignal(str, str)  # playlist_id, category
+    category_changed = Signal(str, str)  # playlist_id, category
     
     def __init__(self, parent=None):
         super().__init__(parent)

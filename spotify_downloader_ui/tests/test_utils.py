@@ -4,8 +4,8 @@ Test utilities for Spotify Downloader UI tests.
 
 import sys
 import logging
-from PyQt6.QtWidgets import QApplication
-from PyQt6.QtCore import Qt
+from PySide6.QtWidgets import QApplication
+from PySide6.QtCore import Qt
 
 # Mock services
 class MockConfigService:
@@ -115,4 +115,4 @@ class ComponentTestRunner:
     
     def exec(self):
         """Run the application event loop."""
-        return self.app.exec() 
+        return self.app.exec_() 

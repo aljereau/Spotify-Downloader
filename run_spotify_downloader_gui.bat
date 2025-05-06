@@ -1,6 +1,8 @@
 @echo off
 echo Starting Spotify Downloader GUI...
 echo.
+echo Using PySide6 GUI framework
+echo.
 set PATH=C:\ffmpeg\ffmpeg-7.1.1-essentials_build\bin;%PATH%
 
 echo Checking dependencies...

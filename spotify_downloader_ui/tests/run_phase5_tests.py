@@ -6,7 +6,7 @@ import sys
 import os
 import logging
 import unittest
-from PyQt6.QtWidgets import QApplication
+from PySide6.QtWidgets import QApplication
 
 # Add root directory to path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
@@ -151,7 +151,7 @@ def run_visual_tests():
         runner.get_component(2).set_analytics_data(SAMPLE_ANALYTICS_DATA)
         runner.get_component(3).set_export_data(SAMPLE_EXPORT_DATA)
         
-        return runner.exec()
+        return runner.exec_()
 
 if __name__ == "__main__":
     # Check if integration or unit test mode is specified

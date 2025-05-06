@@ -9,12 +9,12 @@ This component displays multiple progress bars for different levels of a process
 
 import logging
 from typing import Dict, List, Optional
-from PyQt6.QtWidgets import (
+from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QProgressBar, 
     QGroupBox, QFrame, QSizePolicy
 )
-from PyQt6.QtCore import Qt, pyqtSignal, pyqtSlot, pyqtProperty, QPropertyAnimation, QEasingCurve
-from PyQt6.QtGui import QColor, QPalette
+from PySide6.QtCore import Qt, Signal, Slot, Property, QPropertyAnimation, QEasingCurve
+from PySide6.QtGui import QColor, QPalette
 
 logger = logging.getLogger(__name__)
 
@@ -47,7 +47,7 @@ class ProgressBarWidget(QProgressBar):
         self._animation.setEasingCurve(QEasingCurve.Type.OutCubic)
         self._animation.setDuration(500)  # 500ms duration
     
-    @pyqtProperty(int)
+    @Property(int)
     def animated_value(self):
         """Get the current value."""
         return self.value()

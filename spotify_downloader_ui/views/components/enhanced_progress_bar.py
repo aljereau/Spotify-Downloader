@@ -10,14 +10,14 @@ This component extends the base Qt progress bar with:
 
 import logging
 from typing import Dict, List, Optional, Union, Tuple
-from PyQt6.QtWidgets import (
+from PySide6.QtWidgets import (
     QProgressBar, QWidget, QHBoxLayout, QLabel, QSizePolicy
 )
-from PyQt6.QtCore import (
-    Qt, pyqtSignal, pyqtSlot, pyqtProperty, QPropertyAnimation, 
+from PySide6.QtCore import (
+    Qt, Signal, Slot, Property, QPropertyAnimation, 
     QEasingCurve, QSize, QTimer
 )
-from PyQt6.QtGui import (
+from PySide6.QtGui import (
     QPainter, QLinearGradient, QBrush, QPen, QColor, QFont,
     QPalette, QFontMetrics
 )
@@ -28,7 +28,7 @@ class EnhancedProgressBar(QWidget):
     """Enhanced progress bar with animations and customizable appearance."""
     
     # Signal when progress changes
-    progress_changed = pyqtSignal(int)
+    progress_changed = Signal(int)
     
     def __init__(self, parent=None):
         """Initialize the enhanced progress bar.
@@ -97,7 +97,7 @@ class EnhancedProgressBar(QWidget):
         """Get the minimum recommended size for the widget."""
         return QSize(100, self._height)
     
-    @pyqtProperty(int)
+    @Property(int)
     def animated_value(self) -> int:
         """Get the animated value property.
         

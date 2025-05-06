@@ -7,7 +7,7 @@ import os
 import sys
 import traceback
 from typing import Dict, List, Optional, Tuple, Callable, Any
-from PyQt6.QtCore import QObject, pyqtSignal, pyqtSlot, QThread
+from PySide6.QtCore import QObject, Signal, Slot, QThread
 
 # Import the backend functionality
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
@@ -42,10 +42,10 @@ class PlaylistWorker(QObject):
     """Worker class for processing playlists in a separate thread."""
     
     # Signals
-    finished = pyqtSignal()
-    progress = pyqtSignal(int, int)  # current, total
-    error = pyqtSignal(Exception)
-    playlist_processed = pyqtSignal(str, Dict, List[Dict], str)  # playlist_id, metadata, tracks, output_dir
+    finished = Signal()
+    progress = Signal(int, int)  # current, total
+    error = Signal(Exception)
+    playlist_processed = Signal(str, object, object, str)  # playlist_id, metadata, tracks, output_dir
     
     def __init__(self, url: str, output_dir: str, include_artist: bool = False, 
                  create_playlist_folders: bool = True):
@@ -64,7 +64,7 @@ class PlaylistWorker(QObject):
         self.create_playlist_folders = create_playlist_folders
         self.sp = None
     
-    @pyqtSlot()
+    @Slot()
     def process(self):
         """Process the playlist."""
         try:
@@ -133,12 +133,12 @@ class PlaylistService(QObject):
     """Service for interacting with the backend playlist functionality."""
     
     # Signals
-    playlist_validation_completed = pyqtSignal(str)  # playlist_id
-    playlist_metadata_loaded = pyqtSignal(Dict)  # metadata
-    playlist_processing_started = pyqtSignal(str)  # playlist_id
-    playlist_processing_progress = pyqtSignal(int, int)  # current, total
-    playlist_processed = pyqtSignal(str, Dict, List[Dict], str)  # playlist_id, metadata, tracks, output_dir
-    processing_error = pyqtSignal(Exception)
+    playlist_validation_completed = Signal(str)  # playlist_id
+    playlist_metadata_loaded = Signal(object)  # metadata
+    playlist_processing_started = Signal(str)  # playlist_id
+    playlist_processing_progress = Signal(int, int)  # current, total
+    playlist_processed = Signal(str, object, object, str)  # playlist_id, metadata, tracks, output_dir
+    processing_error = Signal(Exception)
     
     def __init__(self):
         """Initialize the playlist service."""

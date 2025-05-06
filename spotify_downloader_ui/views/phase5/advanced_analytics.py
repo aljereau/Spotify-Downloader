@@ -5,13 +5,13 @@ Advanced Analytics component for visualizing comprehensive playlist analytics.
 import logging
 from typing import Dict, List, Any, Optional
 
-from PyQt6.QtWidgets import (
+from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, 
     QTabWidget, QSplitter, QComboBox, QFrame, QGridLayout,
     QGroupBox, QCheckBox, QScrollArea
 )
-from PyQt6.QtCore import Qt, pyqtSignal
-from PyQt6.QtGui import QFont
+from PySide6.QtCore import Qt, Signal
+from PySide6.QtGui import QFont
 
 from spotify_downloader_ui.services.config_service import ConfigService
 from spotify_downloader_ui.services.error_service import ErrorService

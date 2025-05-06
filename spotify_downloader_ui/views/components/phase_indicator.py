@@ -7,11 +7,11 @@ showing completed phases, the current phase, and upcoming phases.
 
 import logging
 from typing import List, Dict, Optional, Tuple
-from PyQt6.QtWidgets import (
+from PySide6.QtWidgets import (
     QWidget, QHBoxLayout, QVBoxLayout, QLabel, QFrame, QSizePolicy
 )
-from PyQt6.QtCore import Qt, pyqtSignal, pyqtSlot, QSize, QPropertyAnimation, QEasingCurve
-from PyQt6.QtGui import QColor, QPalette, QFont
+from PySide6.QtCore import Qt, Signal, Slot, QSize, QPropertyAnimation, QEasingCurve
+from PySide6.QtGui import QColor, QPalette, QFont
 
 logger = logging.getLogger(__name__)
 

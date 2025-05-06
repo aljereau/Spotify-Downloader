@@ -14,13 +14,13 @@ python -m spotify_downloader_ui.tests.simple_test
 
 import sys
 import logging
-from PyQt6.QtWidgets import (
+from PySide6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QSplitter, QLabel, QListWidget, QListWidgetItem, QLineEdit,
     QCheckBox, QComboBox, QPushButton, QGroupBox, QFrame, QScrollArea
 )
-from PyQt6.QtCore import Qt, QSize
-from PyQt6.QtGui import QFont, QColor, QPalette
+from PySide6.QtCore import Qt, QSize
+from PySide6.QtGui import QFont, QColor, QPalette
 
 class MockPlaylistResultsView(QWidget):
     """Mock implementation of PlaylistResultsView."""
@@ -351,7 +351,7 @@ def main():
     window.show()
     
     # Run the event loop
-    return app.exec()
+    return app.exec_()
 
 if __name__ == "__main__":
     sys.exit(main()) 

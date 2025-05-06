@@ -8,13 +8,27 @@ The following dependencies must be installed:
 
 1. **Python 3.7 or higher**
 2. **FFmpeg** - Automatically included in the setup
-3. **yt-dlp** - Automatically installed with the application
+3. **PySide6** - The Python binding for Qt application framework
+4. **yt-dlp** - Automatically installed with the application
+
+## Installation
+
+Run the `install_dependencies.bat` script to automatically install all required dependencies:
+
+```
+install_dependencies.bat
+```
+
+This script will:
+1. Install all Python dependencies using pip
+2. Check for FFmpeg and download it if not found
+3. Verify all dependencies are correctly installed
 
 ## Running the Application
 
 Two batch files are provided for easy use:
 
-### Command-Line Interface (Recommended)
+### Command-Line Interface
 
 Run `run_spotify_downloader.bat` to use the command-line interface:
 
@@ -31,22 +45,51 @@ run_spotify_downloader.bat https://open.spotify.com/playlist/your_playlist_id
 # Download tracks with specific format
 run_spotify_downloader.bat --format mp3 https://open.spotify.com/playlist/your_playlist_id
 
-# Download tracks to a specific directory
+# Set custom output directory
 run_spotify_downloader.bat -o "C:\Music" https://open.spotify.com/playlist/your_playlist_id
 
-# Get help and see all options
+# Show help
 run_spotify_downloader.bat --help
 ```
 
-### Graphical User Interface (Experimental)
+### Graphical User Interface
 
-Run `run_spotify_downloader_gui.bat` to use the graphical interface:
+Run `run_spotify_downloader_gui.bat` to use the graphical user interface:
 
 ```
 run_spotify_downloader_gui.bat
 ```
 
-Note: The GUI version may not work on all systems. If it fails, the command-line interface will be launched instead.
+The GUI provides a user-friendly way to:
+- Enter Spotify playlist URLs
+- Configure download settings
+- Track download progress
+- View playlist analysis
+
+## Troubleshooting
+
+If you encounter issues with the application, try the following steps:
+
+1. **Run the dependency check again**:
+   ```
+   python -m src.spotify_downloader --check-deps
+   ```
+
+2. **Verify FFmpeg is properly installed**:
+   ```
+   ffmpeg -version
+   ```
+
+3. **Check your Spotify API credentials**:
+   Make sure your .env file contains valid Spotify client ID and secret.
+
+4. **Update dependencies**:
+   ```
+   pip install -r requirements.txt --upgrade
+   ```
+
+5. **Check the log files**:
+   Log files are stored in the `logs` directory and might contain useful debugging information.
 
 ## Command-Line Options
 
@@ -71,25 +114,6 @@ Download Options:
 Utility Options:
   --check-deps          Check if required dependencies (yt-dlp, ffmpeg) are installed
 ```
-
-## Troubleshooting
-
-If you encounter issues:
-
-1. Run the dependency check:
-   ```
-   run_spotify_downloader.bat --check-deps
-   ```
-
-2. Ensure FFmpeg is properly installed:
-   ```
-   ffmpeg -version
-   ```
-
-3. Update Python and all dependencies:
-   ```
-   pip install --upgrade -r requirements.txt
-   ```
 
 ## Spotify Authentication
 

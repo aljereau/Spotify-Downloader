@@ -5,13 +5,13 @@ Task Queue Manager component for managing playlist processing tasks.
 import logging
 from typing import List, Dict, Optional, Callable
 from enum import Enum
-from PyQt6.QtWidgets import (
+from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, 
     QListWidget, QListWidgetItem, QMenu, QFrame, QSplitter,
     QScrollArea, QSizePolicy, QToolBar, QToolButton, QComboBox
 )
-from PyQt6.QtCore import Qt, pyqtSignal, pyqtSlot, QSize
-from PyQt6.QtGui import QIcon, QDrag, QPixmap, QPainter, QColor, QAction
+from PySide6.QtCore import Qt, Signal, Slot, QSize
+from PySide6.QtGui import QIcon, QDrag, QPixmap, QPainter, QColor, QAction, QAction, QAction
 
 from spotify_downloader_ui.services.config_service import ConfigService
 from spotify_downloader_ui.services.error_service import ErrorService
@@ -103,12 +103,12 @@ class TaskQueueManager(QWidget):
     """Widget for managing task queue visualization and operations."""
     
     # Signals
-    task_selected = pyqtSignal(str)  # task_id
-    task_double_clicked = pyqtSignal(str)  # task_id
-    task_priority_changed = pyqtSignal(str, TaskPriority)  # task_id, priority
-    task_cancelled = pyqtSignal(str)  # task_id
-    task_restarted = pyqtSignal(str)  # task_id
-    queue_reordered = pyqtSignal(list)  # new_order of task_ids
+    task_selected = Signal(str)  # task_id
+    task_double_clicked = Signal(str)  # task_id
+    task_priority_changed = Signal(str, TaskPriority)  # task_id, priority
+    task_cancelled = Signal(str)  # task_id
+    task_restarted = Signal(str)  # task_id
+    queue_reordered = Signal(list)  # new_order of task_ids
     
     def __init__(self, config_service: ConfigService, error_service: ErrorService):
         """Initialize the task queue manager.
@@ -633,7 +633,7 @@ class TaskQueueManager(QWidget):
         
         self.stats_label.setText("\n".join(stats))
     
-    @pyqtSlot()
+    @Slot()
     def _on_selection_changed(self) -> None:
         """Handle selection change in task list."""
         selected_items = self.task_list.selectedItems()
@@ -650,7 +650,7 @@ class TaskQueueManager(QWidget):
         
         self._update_details_view()
     
-    @pyqtSlot(QListWidgetItem)
+    @Slot(QListWidgetItem)
     def _on_item_double_clicked(self, item: QListWidgetItem) -> None:
         """Handle double-click on a task item.
         
@@ -660,12 +660,12 @@ class TaskQueueManager(QWidget):
         task_id = item.data(Qt.ItemDataRole.UserRole)
         self.task_double_clicked.emit(task_id)
     
-    @pyqtSlot()
+    @Slot()
     def _on_filter_changed(self) -> None:
         """Handle change in filter selection."""
         self._refresh_task_list()
     
-    @pyqtSlot()
+    @Slot()
     def _on_priority_changed(self) -> None:
         """Handle change in priority selection."""
         if self.current_task_id in self.tasks:
@@ -679,13 +679,13 @@ class TaskQueueManager(QWidget):
                 # Refresh list to update visuals
                 self._refresh_task_list()
     
-    @pyqtSlot()
+    @Slot()
     def _on_start_clicked(self) -> None:
         """Handle click on start button."""
         if self.current_task_id in self.tasks:
             self.task_restarted.emit(self.current_task_id)
     
-    @pyqtSlot()
+    @Slot()
     def _on_pause_clicked(self) -> None:
         """Handle click on pause button."""
         if self.current_task_id in self.tasks:
@@ -696,7 +696,7 @@ class TaskQueueManager(QWidget):
             # Emit signal to notify controller
             # This would be handled by a controller that interacts with the playlist service
     
-    @pyqtSlot()
+    @Slot()
     def _on_cancel_clicked(self) -> None:
         """Handle click on cancel button."""
         if self.current_task_id in self.tasks:
@@ -708,24 +708,24 @@ class TaskQueueManager(QWidget):
             self._update_details_view()
             self._refresh_task_list()
     
-    @pyqtSlot()
+    @Slot()
     def _on_clear_completed(self) -> None:
         """Handle click on clear completed button."""
         self.clear_completed_tasks()
     
-    @pyqtSlot()
+    @Slot()
     def _on_start_all(self) -> None:
         """Handle click on start all button."""
         # This would be handled by a controller
         pass
     
-    @pyqtSlot()
+    @Slot()
     def _on_pause_all(self) -> None:
         """Handle click on pause all button."""
         # This would be handled by a controller
         pass
     
-    @pyqtSlot()
+    @Slot()
     def _on_rows_moved(self) -> None:
         """Handle reordering of tasks in the list widget."""
         # Get the new order of task IDs

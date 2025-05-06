@@ -6,7 +6,7 @@ import os
 import logging
 import json
 from typing import Any, Dict, Optional
-from PyQt6.QtCore import QSettings
+from PySide6.QtCore import QSettings
 
 logger = logging.getLogger(__name__)
 

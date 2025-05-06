@@ -7,15 +7,15 @@ successfully or encounters an error.
 
 import logging
 from typing import Optional, List, Dict
-from PyQt6.QtWidgets import (
+from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QGraphicsOpacityEffect,
     QFrame, QSizePolicy
 )
-from PyQt6.QtCore import (
-    Qt, pyqtSignal, pyqtSlot, QPropertyAnimation, QParallelAnimationGroup,
+from PySide6.QtCore import (
+    Qt, Signal, Slot, QPropertyAnimation, QParallelAnimationGroup,
     QSequentialAnimationGroup, QEasingCurve, QSize, QTimer, QRect, QPoint, Property
 )
-from PyQt6.QtGui import (
+from PySide6.QtGui import (
     QPainter, QPainterPath, QPen, QBrush, QColor, QFont, QPaintEvent,
     QLinearGradient, QRadialGradient
 )
@@ -70,20 +70,20 @@ class CheckmarkAnimation(QWidget):
         self.update()
     
     def get_progress(self) -> float:
-        """Get the animation progress value.
+        """Get the current progress.
         
         Returns:
-            Progress value (0.0 to 1.0)
+            Progress value between 0.0 and 1.0
         """
         return self._progress
     
-    def set_progress(self, progress: float):
-        """Set the animation progress value.
+    def set_progress(self, value: float):
+        """Set the progress value.
         
         Args:
-            progress: Progress value (0.0 to 1.0)
+            value: Progress value between 0.0 and 1.0
         """
-        self._progress = max(0.0, min(1.0, progress))
+        self._progress = value
         self.update()
     
     progress = Property(float, get_progress, set_progress)
@@ -226,20 +226,20 @@ class CrossAnimation(QWidget):
         self.update()
     
     def get_progress(self) -> float:
-        """Get the animation progress value.
+        """Get the current progress.
         
         Returns:
-            Progress value (0.0 to 1.0)
+            Progress value between 0.0 and 1.0
         """
         return self._progress
     
-    def set_progress(self, progress: float):
-        """Set the animation progress value.
+    def set_progress(self, value: float):
+        """Set the progress value.
         
         Args:
-            progress: Progress value (0.0 to 1.0)
+            value: Progress value between 0.0 and 1.0
         """
-        self._progress = max(0.0, min(1.0, progress))
+        self._progress = value
         self.update()
     
     progress = Property(float, get_progress, set_progress)
@@ -456,7 +456,7 @@ class CompletionAnimation(QWidget):
     """Widget for animated completion feedback."""
     
     # Signal emitted when animation completes
-    animation_finished = pyqtSignal()
+    animation_finished = Signal()
     
     # Animation states
     STATE_SUCCESS = 1

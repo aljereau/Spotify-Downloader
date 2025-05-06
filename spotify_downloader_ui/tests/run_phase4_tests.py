@@ -8,8 +8,8 @@ and an integrated visual test showing all components together.
 import sys
 import logging
 import unittest
-from PyQt6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QHBoxLayout, QSplitter, QWidget
-from PyQt6.QtCore import Qt
+from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QHBoxLayout, QSplitter, QWidget
+from PySide6.QtCore import Qt
 
 # Use mock components to avoid import issues
 from spotify_downloader_ui.tests.test_components import (
@@ -201,7 +201,7 @@ def run_integration_test():
     window.show()
     
     # Run the event loop
-    return app.exec()
+    return app.exec_()
 
 if __name__ == "__main__":
     # Parse command line arguments

@@ -5,211 +5,241 @@ alwaysApply: false
 ---
 # Development Rules & Workflow Standards
 
-## Core Principles
+- **Backend Integrity**
+  - Never modify backend code unless absolutely necessary and explicitly approved
+  - Backend functionality must remain operational at all times
+  - Make service layer wrappers for all backend interactions
+  - Test against the original CLI functionality to verify integrity
 
-- **Backend Integrity**: Never modify backend code unless absolutely necessary and explicitly approved.
-- **Sequential Development**: Phases must be implemented strictly in order.
-- **Validation First**: Each component must be validated before moving forward.
-- **Documentation Consistency**: Documentation must be updated at each milestone.
-- **Structured Progress**: Progress must be tracked at the task level, not just phase level.
+- **Sequential Development**
+  - Phases must be implemented strictly in order
+  - All tasks within a phase must be validated before moving to the next phase
+  - Dependencies between phases must be respected
+  - No skipping ahead to later phases until earlier phases are complete
+
+- **Validation First**
+  - Each component must be validated before moving forward
+  - Validation must include automated tests where possible
+  - User testing must be performed for UI components
+  - Evidence of validation must be documented
+
+- **Documentation Consistency**
+  - Documentation must be updated at each milestone
+  - README.md updates are required after each phase
+  - Technical documentation must reflect the current state
+  - Code documentation must follow established standards
+
+- **Structured Progress**
+  - Progress must be tracked at the task level, not just phase level
+  - Progress tracking documents must be kept up to date
+  - Issues and blockers must be documented immediately
+  - Status updates should reference specific task IDs
 
 ## Documentation System & Workflow
 
 ### Document Relationships & Usage
 
-The UI development is guided by four types of interconnected documents:
+- **Master Reference Documents**
+  - [PROJECT_ROADMAP.mdc](mdc:UI/PROJECT_ROADMAP.mdc): High-level overview and navigation
+  - [DOCUMENTATION_FLOW.mdc](mdc:UI/DOCUMENTATION_FLOW.mdc): Visual guide to document relationships
+  - [DEVELOPMENT_RULES.mdc](mdc:UI/DEVELOPMENT_RULES.mdc) (this document): Process guidelines
+  - [PROGRESS_TEMPLATE.mdc](mdc:UI/PROGRESS_TEMPLATE.mdc): Template for progress tracking
 
-1. **[PROJECT_ROADMAP.mdc](mdc:UI/PROJECT_ROADMAP.mdc)** - The high-level overview that:
-   - Outlines all development phases
-   - Links to individual phase documentation
-   - Defines core principles and architecture
-   - References all other supporting documents
-   - **When to use**: Start here for orientation and navigation through the project
+- **Phase Definition Documents**
+  - [PHASE_1_FOUNDATION.mdc](mdc:UI/PHASE_1_FOUNDATION.mdc): Phase 1 specifications
+  - [PHASE_2_CORE_UI.mdc](mdc:UI/PHASE_2_CORE_UI.mdc): Phase 2 specifications
+  - [PHASE_3_PROCESS_VISUALIZATION.mdc](mdc:UI/PHASE_3_PROCESS_VISUALIZATION.mdc): Phase 3 specifications
+  - [PHASE_4_RESULTS_DISPLAY.mdc](mdc:UI/PHASE_4_RESULTS_DISPLAY.mdc): Phase 4 specifications
+  - [PHASE_5_ADVANCED_FEATURES.mdc](mdc:UI/PHASE_5_ADVANCED_FEATURES.mdc): Phase 5 specifications
+  - [PHASE_6_PACKAGING.mdc](mdc:UI/PHASE_6_PACKAGING.mdc): Phase 6 specifications
 
-2. **Phase Definition Documents** (e.g., [PHASE_1_FOUNDATION.mdc](mdc:UI/PHASE_1_FOUNDATION.mdc)) - Detailed phase specifications that:
-   - Define specific objectives for each phase
-   - Break down phases into components and tasks
-   - Provide implementation guidelines
-   - Specify deliverables and dependencies
-   - **When to use**: Consult when starting a new phase or component
+- **Progress Tracking Documents**
+  - [PHASE_1_PROGRESS.mdc](mdc:UI/PHASE_1_PROGRESS.mdc): Phase 1 progress
+  - Additional progress documents created as phases begin
 
-3. **Progress Tracking Documents** (e.g., [PHASE_1_PROGRESS.mdc](mdc:UI/PHASE_1_PROGRESS.mdc)) - Active progress documents that:
-   - Track the status of each task and component
-   - Document validation evidence
-   - Record issues, blockers, and technical debt
-   - Capture retrospective notes
-   - **When to use**: Update continuously during development
+### Development Workflow
 
-4. **[DEVELOPMENT_RULES.mdc](mdc:UI/DEVELOPMENT_RULES.mdc)** (this document) - Process guidelines that:
-   - Define workflow standards
-   - Specify validation requirements
-   - Set documentation protocols
-   - Establish code quality standards
-   - **When to use**: Consult before starting work and when questions about process arise
+- **Preparation Process**
+  - Review the PROJECT_ROADMAP to understand context
+  - Study the relevant Phase Definition document
+  - Verify completion of previous phases via Progress documents
+  - Initialize the Progress document for the current phase
+  - Complete the Pre-Phase Validation section
 
-### Development Workflow Using Documentation
+- **Implementation Process**
+  - Update Progress document as tasks progress through statuses
+  - Document validation evidence for completed tasks
+  - Record issues and blockers as encountered
+  - Reference Phase Definition document for guidelines
+  - Follow code quality standards in this document
 
-The workflow for each phase follows this pattern:
+- **Validation Process**
+  - Perform component validation per requirements
+  - Document validation evidence with screenshots or test results
+  - Mark components as VALIDATED only after meeting criteria
+  - Update the Phase Validation section in Progress document
 
-1. **Preparation**:
-   - Review the [PROJECT_ROADMAP.mdc](mdc:UI/PROJECT_ROADMAP.mdc) to understand context
-   - Study the relevant Phase Definition document (e.g., [PHASE_1_FOUNDATION.mdc](mdc:UI/PHASE_1_FOUNDATION.mdc))
-   - Verify completion of previous phases via their Progress Tracking documents
-   - Initialize the Progress Tracking document for the current phase from the [PROGRESS_TEMPLATE.mdc](mdc:UI/PROGRESS_TEMPLATE.mdc)
-   - Complete the Pre-Phase Validation section in the Progress document
+- **Phase Completion Process**
+  - Complete all items in the Phase Completion Checklist
+  - Conduct retrospective and document findings
+  - Update README.md with new features
+  - Prepare for the next phase
 
-2. **Development**:
-   - Update the Progress Tracking document as each task moves from NOT_STARTED → IN_PROGRESS → COMPLETED
-   - Include validation evidence for each completed task
-   - Document any issues or blockers encountered
-   - Reference the Phase Definition document for implementation guidelines
-   - Consult this DEVELOPMENT_RULES document for standards compliance
+### Documentation Guidelines
 
-3. **Validation**:
-   - Perform component validation per the requirements in this document
-   - Update the Progress Tracking document with validation evidence
-   - Mark components as VALIDATED only after meeting all criteria
-   - Update the Phase Validation section of the Progress document
+- **Cross-Referencing**
+  - Use MDC links when referencing other documents: `[title](mdc:path/to/file)`
+  - Reference specific task IDs when documenting implementation
+  - Include Progress document references in commit messages
 
-4. **Phase Completion**:
-   - Complete all items in the Phase Completion Checklist
-   - Conduct retrospective and document findings
-   - Update the README.md with new features
-   - Prepare for the next phase or create the next Progress Tracking document
-
-### Cross-Referencing Guidelines
-
-- Always use MDC links when referencing other documents
-- When documenting implementation details, reference the specific task ID
-- When committing code, reference the Progress Tracking document and task ID
-
-### Documentation Update Frequency
-
-- PROJECT_ROADMAP.mdc: Update only for major structural changes
-- Phase Definition documents: Generally static, update only if scope changes
-- Progress Tracking documents: Update continuously (at least daily during active development)
-- DEVELOPMENT_RULES.mdc: Update when process improvements are identified
+- **Update Frequency**
+  - PROJECT_ROADMAP: Update only for major structural changes
+  - Phase Definition documents: Generally static, update only if scope changes
+  - Progress Tracking documents: Update daily during active development
+  - DEVELOPMENT_RULES: Update when process improvements are identified
 
 ## Phase Transition Rules
 
-1. **Pre-Phase Validation**
-   - Before starting any phase, thoroughly review all completed work from previous phases
-   - Confirm all components from previous phases are functioning correctly
-   - Verify documentation accuracy for completed work
-   - Identify any dependencies or interfaces needed from previous phases
+- **Pre-Phase Validation Requirements**
+  - Review all completed work from previous phases
+  - Verify all components from previous phases function correctly
+  - Check documentation accuracy for completed work
+  - Identify dependencies needed from previous phases
 
-2. **Component Completion Criteria**
-   - Each numbered task (e.g., 1.1, 1.2) must have explicit completion criteria
-   - Unit tests must pass for each component
-   - Components must work in isolation and integration contexts
-   - Code must follow established patterns and conventions
-   - No regressions in previously completed components
+- **Component Completion Criteria**
+  - Each numbered task must have explicit completion evidence
+  - Unit tests must pass for each component
+  - Components must work in isolation and integration contexts
+  - No regressions in previously completed components
 
-3. **Progress Tracking Requirements**
-   - Each phase must have a PROGRESS.md file tracking status of individual tasks
-   - Task statuses must be one of: NOT_STARTED, IN_PROGRESS, COMPLETED, VALIDATED
-   - Each completed task must include validation evidence/notes
-   - Progress tracking must be updated with each commit
+- **Progress Tracking Requirements**
+  - Each phase must have a PROGRESS.md file for task status
+  - Tasks must use statuses: NOT_STARTED, IN_PROGRESS, COMPLETED, VALIDATED
+  - Each completed task must include validation evidence
+  - Progress tracking must be updated with each commit
 
-4. **Documentation Update Protocol**
-   - README.md must be updated after completing each phase
-   - Architecture documentation must be updated with any new patterns or components
-   - UI component documentation must be maintained alongside code
-   - Validation notes must be captured for future reference
+- **Documentation Update Protocol**
+  - README.md must be updated after completing each phase
+  - Architecture documentation must be updated with new patterns
+  - UI component documentation must be maintained alongside code
+  - Validation notes must be captured for future reference
 
 ## Development Process Rules
 
-1. **Component Development Workflow**
-   - Create unit tests before implementation (Test-Driven Development)
-   - Implement component with minimal dependencies
-   - Test in isolation with mock services/interfaces
-   - Integrate with other components
-   - Validate expected behavior in integrated context
-   - Mark as COMPLETED only after passing all tests
-   - Senior developer review before marking VALIDATED
+- **Component Development Workflow**
+  ```python
+  # ✅ DO: Follow test-driven development
+  def test_playlist_input_validation():
+      # Test written before implementation
+      input_validator = PlaylistInputValidator()
+      assert input_validator.validate("https://open.spotify.com/playlist/valid") == True
+      assert input_validator.validate("invalid-url") == False
+  
+  # ❌ DON'T: Implement without tests
+  def playlist_input_validation(url):
+      # Implementation without tests leads to harder validation
+      return "open.spotify.com/playlist" in url
+  ```
 
-2. **Code Quality Standards**
-   - Follow PEP 8 coding style for Python
-   - Document all public methods and classes
-   - Keep methods focused with single responsibility 
-   - Use type hints consistently
-   - Maintain separation of concerns between UI and business logic
-   - Follow established naming conventions
+- **Code Quality Standards**
+  ```python
+  # ✅ DO: Use type hints and follow PEP 8
+  def process_playlist(playlist_id: str, options: Dict[str, Any]) -> PlaylistResult:
+      """Process a Spotify playlist and return analysis results.
+      
+      Args:
+          playlist_id: The Spotify playlist ID
+          options: Processing options
+          
+      Returns:
+          PlaylistResult object with analysis data
+      """
+      # Implementation follows single responsibility principle
+      
+  # ❌ DON'T: Write unclear, poorly typed code
+  def process(id, opts):
+      # No type hints
+      # No documentation
+      # Multiple responsibilities in one function
+  ```
 
-3. **Branching Strategy**
-   - Create feature branches for each component (e.g., `feature/phase2-playlist-input`)
-   - Pull requests required for merging to main branch
-   - Branches must pass CI/CD checks before merging
-   - No direct commits to main branch
-   - Branch naming must follow pattern: `[type]/phase[number]-[component]`
+- **Branching Strategy**
+  - Create feature branches for each component
+    - Format: `feature/phase<number>-<component>`
+    - Example: `feature/phase2-playlist-input`
+  - Require pull requests before merging to main
+  - Pass CI/CD checks before merging
+  - No direct commits to main branch
 
-4. **Commit Standards**
-   - Atomic commits that address one logical change
-   - Commit messages must follow pattern: `[Phase X.Y] Component: Brief description`
-   - Include task ID in commit messages (e.g., `[Phase 2.3] Playlist Input: Add URL validation`)
-   - Reference UI documentation updates in commits that complete components
+- **Commit Standards**
+  - Make atomic commits (one logical change)
+  - Follow message format: `[Phase X.Y] Component: Brief description`
+  - Include task ID in messages
+  - Reference documentation updates in commits
 
 ## Validation Requirements
 
-1. **Component Validation**
-   - Automated tests for core functionality
-   - Edge case testing documented
-   - Performance validation where applicable
-   - UI responsiveness verified
-   - Cross-platform validation (if applicable at that stage)
+- **Component Validation Process**
+  - Write automated tests for core functionality
+  - Document edge case testing
+  - Verify performance where applicable
+  - Test UI responsiveness
+  - Validate cross-platform compatibility
 
-2. **Phase Validation**
-   - All components in phase must be VALIDATED
-   - Integration testing between components
-   - User workflow testing through the phase's features
-   - Documentation review and accuracy check
-   - Performance validation of phase as a whole
+- **Phase Validation Process**
+  - Verify all components in phase are VALIDATED
+  - Perform integration testing between components
+  - Conduct user workflow testing
+  - Review documentation for accuracy
+  - Validate phase performance as a whole
 
-3. **Progress Validation Evidence**
-   - Screenshots of working UI components
-   - Test results summary
-   - Performance metrics (if applicable)
-   - List of addressed edge cases
-   - Known limitations (if any)
+- **Progress Validation Evidence**
+  - Include screenshots of working UI components
+  - Provide test results summary
+  - Document performance metrics where applicable
+  - List edge cases that were addressed
+  - Note any known limitations
 
 ## Documentation Requirements
 
-1. **Component Documentation**
-   - Purpose and functionality
-   - Public API/interfaces
-   - Usage examples
-   - Dependencies
-   - Design decisions and trade-offs
-   - Known limitations
+- **Component Documentation**
+  - Purpose and functionality description
+  - Public API/interfaces documentation
+  - Usage examples
+  - Dependencies list
+  - Design decisions and trade-offs explanation
+  - Known limitations
 
-2. **Phase Documentation**
-   - Overview of completed functionality
-   - Architecture diagram updates
-   - User workflows implemented
-   - Technical achievements
-   - Lessons learned
+- **Phase Documentation**
+  - Overview of completed functionality
+  - Architecture diagram updates
+  - User workflow descriptions
+  - Technical achievements summary
+  - Lessons learned section
 
-3. **README Updates**
-   - Feature list must be updated with newly implemented capabilities
-   - Screenshots of new UI components
-   - Updated installation/usage instructions if applicable
-   - Clear indication of current project status
+- **README Updates**
+  - Update feature list with new capabilities
+  - Add screenshots of new UI components
+  - Revise installation/usage instructions
+  - Clarify current project status
 
-## Issues and Blockers
+## Issue Management
 
-- Issues must be documented immediately when discovered
-- Blockers must be escalated and documented in PROGRESS.md
-- Workarounds must be approved before implementation
-- Technical debt must be documented for later resolution
+- **Issue Handling**
+  - Document issues immediately when discovered
+  - Escalate blockers in PROGRESS.md
+  - Get approval before implementing workarounds
+  - Document technical debt for later resolution
 
-## Retrospective
-
-- After each phase, conduct a brief retrospective
-- Document what went well and what could be improved
-- Update development rules if needed based on lessons learned
-- Apply insights to improve upcoming phases
+- **Retrospective Process**
+  - Conduct brief retrospective after each phase
+  - Document successes and improvement areas
+  - Update rules based on lessons learned
+  - Apply insights to improve upcoming phases
 
 ---
 
 These rules serve as the guiding principles for the UI development process. They ensure that development follows a structured, validated approach with clear documentation at each step, maintaining the integrity of both the UI components and the underlying backend functionality.
+
+
 
