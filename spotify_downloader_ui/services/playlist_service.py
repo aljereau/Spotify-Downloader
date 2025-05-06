@@ -69,6 +69,7 @@ class PlaylistWorker(QObject):
         """Process the playlist."""
         try:
             logger.info(f"Processing playlist: {self.url}")
+            logger.info(f"Using output directory: {self.output_dir} (type: {type(self.output_dir)})")
             
             # Validate URL and extract playlist ID
             playlist_id = validate_spotify_url(self.url)
@@ -88,7 +89,7 @@ class PlaylistWorker(QObject):
             
             batch_size = 100
             for offset in range(0, total_tracks, batch_size):
-                batch = self.sp._get_playlist_tracks(playlist_id, limit=batch_size, offset=offset)
+                batch = self.sp.playlist_tracks(playlist_id, limit=batch_size, offset=offset)
                 for i, item in enumerate(batch['items']):
                     if 'track' in item and item['track']:
                         track = {
@@ -108,11 +109,12 @@ class PlaylistWorker(QObject):
                 # Update progress
                 self.progress.emit(min(offset + batch_size, total_tracks), total_tracks)
             
-            # Process the playlist using the backend function
+            # Process the playlist using the backend function - ensure output_dir is a string
+            logger.info(f"Calling backend process_playlist with output_dir: {self.output_dir}")
             folder_path, tracks_file, links_file = process_playlist(
                 self.sp,
                 self.url,
-                self.output_dir,
+                self.output_dir,  # This must be a string
                 self.include_artist,
                 not self.create_playlist_folders
             )
@@ -125,6 +127,7 @@ class PlaylistWorker(QObject):
             
         except Exception as e:
             logger.error(f"Error processing playlist: {str(e)}")
+            logger.error(traceback.format_exc())
             self.error.emit(e)
             self.finished.emit()
 
@@ -198,9 +201,37 @@ class PlaylistService(QObject):
             self.thread.quit()
             self.thread.wait()
         
-        # Create worker and thread
+        # CRITICAL FIX: Ensure output_dir is a string before passing it to worker
+        # Extract values from dictionary if needed
+        options = None
+        if isinstance(output_dir, dict):
+            options = output_dir
+            # Default values
+            actual_output_dir = "output"
+            actual_include_artist = include_artist
+            actual_create_playlist_folders = create_playlist_folders
+            
+            # Extract options if available
+            if "output_dir" in options and isinstance(options["output_dir"], str):
+                actual_output_dir = options["output_dir"]
+            if "include_artist" in options:
+                actual_include_artist = options["include_artist"]
+            if "create_playlist_folders" in options:
+                actual_create_playlist_folders = options["create_playlist_folders"]
+            
+            # Use the variables directly from here
+            logger.info(f"Fixed process_playlist params - output_dir: {actual_output_dir}, "
+                      f"include_artist: {actual_include_artist}, "
+                      f"create_playlist_folders: {actual_create_playlist_folders}")
+        else:
+            # Use the parameters directly
+            actual_output_dir = output_dir if isinstance(output_dir, str) else "output"
+            actual_include_artist = include_artist
+            actual_create_playlist_folders = create_playlist_folders
+            
+        # Create worker and thread - pass fixed parameters
         self.thread = QThread()
-        self.worker = PlaylistWorker(url, output_dir, include_artist, create_playlist_folders)
+        self.worker = PlaylistWorker(url, actual_output_dir, actual_include_artist, actual_create_playlist_folders)
         self.worker.moveToThread(self.thread)
         
         # Connect signals

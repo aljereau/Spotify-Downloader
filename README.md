@@ -158,10 +158,10 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Acknowledgments
 
 - [Spotipy](https://github.com/plamere/spotipy) - The Python library for the Spotify Web API
-- [PyQt6](https://www.riverbankcomputing.com/software/pyqt/) - The Python binding for Qt application framework
+- [PySide6](https://doc.qt.io/qtforpython-6/) - The Python binding for Qt application framework
 - [yt-dlp](https://github.com/yt-dlp/yt-dlp) - The command-line utility for downloading YouTube videos
 - [FFmpeg](https://ffmpeg.org/) - The complete solution for audio/video processing
-- Spotify Web API for providing the data access 
+- Spotify Web API for providing the data access
 
 # Spotify Downloader UI
 

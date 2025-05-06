@@ -212,8 +212,8 @@ class ProcessingView(QWidget):
         self.process_vis.add_detail(f"Error: {error_message}")
         self.process_vis.set_processing_complete(success=False, error_message=error_message)
         
-        # Show error dialog
-        self.error_service.show_error("Processing Error", f"An error occurred while processing the playlist: {error_message}")
+        # Show error dialog - use handle_error method instead of show_error
+        self.error_service.handle_error(error, self)
     
     def reset_ui(self):
         """Reset the UI to its initial state."""
